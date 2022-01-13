@@ -21,7 +21,8 @@ const Sidebar = ({category, postSlug}) => {
     <>
       <SectionTitle text={`Więcej z ${category}`} border/>
       <div className='space-y-2 mb-4'>
-        {categoryPosts.map(post => (<PostCard row key={post.title} post={post}/>))}
+        {/* {categoryPosts.map(post => (<PostCard row key={post.title} post={post}/>))} */}
+        {categoryPosts.length >= 1 ? categoryPosts.map(post => <PostCard row key={post.title} post={post}/>) : <h4 className="col-span-5 md:my-2 md:my-8 text-red-600 font-semibold mx-auto">Wystąpił problem przy pobieraniu z bazy danych lub nie ma jeszcze postów w tej kategorii. Przepraszamy!</h4>}
       </div>
     </>
   ) : null

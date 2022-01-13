@@ -27,7 +27,7 @@ const Navbar = () => {
         <div className={`absolute shadow-lg rounded-lg -bottom-20 py-4 w-full z-50 bg-white flex justify-center items-center md:block space-x-2 md:bg-transparent md:shadow-none md:static md:w-auto md:py-0 ${isNavbarClosed && 'hidden'}`}>
           <NavLink href={'/'} text={'Główna'}/>
           {/* <NavLink href={'/players'} text={'Gracze'}/> */}
-          <NavLink href={'/live'} text={'Na żywo'}/>
+          {/* <NavLink href={'/live'} text={'Na żywo'}/> */}
           <NavLink href={'/tournaments'} text={'Turnieje'} isHero={true}/>
         </div>
       </div>
