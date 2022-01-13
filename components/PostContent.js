@@ -28,9 +28,8 @@ const PostContent = ({content}) => {
         return <h4 key={index} className="text-xl font-semibold mb-2">{modifiedText.map((item, i) => <React.Fragment key={i}>{item}</React.Fragment>)}</h4>;
       case 'image':
         return (
-          <div className="w-full flex justify-center my-8">
+          <div key={index} className="w-full flex justify-center my-8">
             <Image
-              key={index}
               alt={obj.title}
               height={obj.height}
               width={obj.width}
@@ -51,7 +50,6 @@ const PostContent = ({content}) => {
             })}
           </ul>
         );
-      case 'embed':
         
       default:
         return modifiedText;

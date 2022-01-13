@@ -7,6 +7,10 @@ import { getFeaturedPost, getRecentPosts } from '../services'
 export default function Home({featuredPost, recentPosts}) {
   return (
     <>
+      <Head>
+        <title>COMPNITE.PL - Fortnite Competitive</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       {/* <div className='container mx-auto flex justify-end'>
         <div className='hidden md:block md:space-x-4 md:my-2 md:px-2 '>
           <button>Wygrane</button>

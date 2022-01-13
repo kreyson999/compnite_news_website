@@ -1,10 +1,14 @@
 import Image from "next/image";
+import Head from "next/head"
 import { FormattedDate, CategoryBox, Sidebar, PostContent, HomeCategory } from "../../components";
 import { getPostDetails, getPostUrls } from "../../services";
 
 export default function PostPage({post}) {
   return (
     <>
+      <Head>
+        <title>{post.title}</title>
+      </Head>
       <header className='container mx-auto px-2 py-8 md:py-12 lg:px-32 text-center grid place-items-center'>
         <FormattedDate date={post.createdAt}/>
         <h1 className="font-bold text-xl md:text-2xl md:mb-2">{post.title}</h1>
