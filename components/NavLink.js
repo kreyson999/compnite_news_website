@@ -10,7 +10,7 @@ const NavLink = ({href, text, isHero}) => {
     <Link href={href}>
       <a 
       className={
-        isHero ? 'text-lg rounded font-normal bg-green-900 p-3 text-white' 
+        isHero ? 'text-lg rounded font-normal bg-green-900 p-2 text-white' 
         : `text-lg p-2 rounded font-normal ${isActive ? 'bg-green-100' : null}`
       }
       >{text}</a>

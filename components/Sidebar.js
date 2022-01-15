@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AsideTwitchSection, TournamentAsideCard, SectionTitle, PostCard } from ".";
+import { AsideTwitchSection, SectionTitle, PostCard, AsideTournamentsSection } from ".";
 import { getPostsByCategory } from "../services";
 
 const Sidebar = ({category, postSlug}) => {
@@ -16,7 +16,6 @@ const Sidebar = ({category, postSlug}) => {
     }
   }, [category,postSlug])
 
-
   const RecommendedFromCategory = category ? (
     <>
       <SectionTitle text={`Więcej z ${category}`} border/>
@@ -31,14 +30,7 @@ const Sidebar = ({category, postSlug}) => {
     <aside className='col-span-1 md:col-span-4'>
       {RecommendedFromCategory}
       <AsideTwitchSection />
-      <SectionTitle text={"Nadchodzące turnieje"} border/>
-      <div className='space-y-2 mb-4'>
-        <TournamentAsideCard/>
-        <TournamentAsideCard/>
-        <TournamentAsideCard/>
-        <TournamentAsideCard/>
-        <TournamentAsideCard/>
-      </div>
+      <AsideTournamentsSection/>
       {/* <SectionTitle text={"Sprawdź gracza"} border />
       <div className='space-y-3'>
         <div className='grid grid-cols-4 gap-3'>

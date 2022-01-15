@@ -57,6 +57,34 @@ export const getRecentPosts = async () => {
   }
 }
 
+export const getUpcomingTournaments = async () => {
+  const query = gql`
+    query getUpcomingTournaments {
+      tournaments(orderBy: date_ASC) {
+        slug
+        name
+        image {
+          url
+        }
+        date
+        tournamentSource
+        linkToRegister
+        mode
+        requiredArenaRank
+        prizepool
+        prizeType
+      }
+    }
+  `
+
+  try {
+    const result = await request(graphqlAPI, query)
+    return result.tournaments
+  } catch (error) {
+    throw Error('There is some problem with fetching recent post')
+  }
+}
+
 export const getPostsByCategory = async (category, slug, quantity = 3) => {
   const query = gql`
     query GetPostsByCategory($category: String!, $slug: String!, $quantity: Int!) {

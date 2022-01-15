@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="relative grid grid-cols-1 md:grid-cols-7 bg-white">
       <div className="col-span-1 md:col-span-2 bg-green-900 px-2 py-4 md:py-8">
         <div className='md:hidden space-x-2 flex justify-center'>
-            <a className='cursor-pointer'>
+            <a target={"_blank"} href={"https://facebook.com/compnite"} rel="noreferrer" className='cursor-pointer'>
               <Image
                 src={'/assets/icons/facebook.svg'}
                 width={40}
@@ -13,7 +13,7 @@ const Footer = () => {
                 alt='Facebook'
               />
             </a>
-            <a className='cursor-pointer'>
+            <a target={"_blank"} href={"https://twitter.com/kreysonfn"} rel="noreferrer" className='cursor-pointer'>
               <Image
                 src={'/assets/icons/twitter.svg'}
                 width={40}
@@ -21,7 +21,7 @@ const Footer = () => {
                 alt='Twitter'
               />
             </a>
-            <a className='cursor-pointer'>
+            <a target={"_blank"} href={"https://instagram.com/compnite"} rel="noreferrer" className='cursor-pointer'>
               <Image
                 src={'/assets/icons/instagram.svg'}
                 width={40}

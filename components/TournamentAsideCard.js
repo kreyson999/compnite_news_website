@@ -1,20 +1,22 @@
 import Image from "next/image";
+import moment from "moment";
 
-const TournamentAsideCard = () => {
+const TournamentAsideCard = ({tournament, active}) => {
   return (
-    <a className="bg-green-100 rounded px-2 flex items-center space-x-2 cursor-pointer">
+    <a href={`/tournaments/${tournament.slug}`} className="relative bg-green-100 rounded px-2 flex items-center space-x-2 cursor-pointer border-r-4 hover:border-green-900">
+      {active ? <div className='absolute -top-1 -right-2 bg-red-600 w-3 h-3 rounded-full'></div> : null} 
       <Image
       src={'/assets/icons/fortnite_star.png'}
-      alt="Fortnite Tournament"
+      alt={tournament.name}
       width={64}
       height={64}
       />
       <div>
-        <h5 className="font-semibold text-lg cursor-pointer">All Valley Cup</h5>
-        <p className="cursor-pointer">19:00, 10 Styczeń</p>
+        <h5 className="font-semibold text-lg cursor-pointer">{tournament.name.toUpperCase()}</h5>
+        <p className="cursor-pointer">{moment(tournament.date).format('HH:mm, DD MMMM')}</p>
       </div>
     </a>
   );
 }
- 
+
 export default TournamentAsideCard;
