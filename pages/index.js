@@ -21,7 +21,7 @@ export default function Home({featuredPost, recentPosts}) {
       </div> */}
       <header className='container mx-auto px-2 py-4 md:mt-10 lg:px-32'>
         <Link href={`/post/${featuredPost.slug}`}>
-          <a className='block  md:grid-cols-7 grid grid-rows-2 md:grid-rows-none gap-2 md:gap-16'>
+          <a className='block md:grid-cols-7 grid grid-rows-2 md:grid-rows-none gap-2 md:gap-16'>
             <div className='relative rounded overflow-hidden grid place-content-center md:col-span-4 shadow-lg'>
               <Image
               src={featuredPost.image.url}

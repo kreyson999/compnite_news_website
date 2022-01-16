@@ -156,6 +156,56 @@ export const getPostDetails = async (slug) => {
   }
 }
 
+export const getTournamentUrls = async () => {
+  const query = gql`
+  query MyQuery {
+    tournamentsConnection {
+      edges {
+        node {
+          slug
+        }
+      }
+    }
+  }
+  `
+  try {
+    const result = await request(graphqlAPI, query)
+    return result.tournamentsConnection.edges
+  } catch (error) {
+    throw Error('There is some problem with fetching urls of tournament')
+  }
+}
+
+export const getTournamentDetails = async (slug) => {
+  const query = gql`
+    query GetTournamentDetails($slug: String!) {
+      tournament(where: {slug: $slug}) {
+        createdAt
+        date
+        description
+        image {
+          url
+        }
+        linkToRegister
+        linkToTable
+        mode
+        name
+        prizeType
+        prizepool
+        requiredArenaRank
+        tournamentSource
+        scoring
+      }
+    }
+  `
+  try {
+    const result = await request(graphqlAPI, query, { slug: slug})
+    return result.tournament
+  } catch (error) {
+    throw Error(`There is some problem with fetching urls of post ${error}`)
+  }
+}
+
 // ####################
 // OTHER
 // ####################

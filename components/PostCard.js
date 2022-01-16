@@ -6,7 +6,7 @@ import Link from 'next/link'
 const PostCard = ({row, post, small}) => {
   return (
     <Link href={`/post/${post.slug}`}>
-      <a className='block cursor-pointer'>
+      <a className='block cursor-pointer hover:opacity-70'>
         <div className={row ? "grid grid-cols-2 space-x-4 " : "grid grid-cols-2 md:grid-cols-1 space-x-4 md:space-x-0 md:space-y-2"}>
           <Image
           src={post.image.url}
