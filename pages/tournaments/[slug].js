@@ -10,68 +10,68 @@ import { TournamentTimer } from "../../components";
 
 export default function TournamentPage({tournament}) {
   const router = useRouter()
-  const [isAwards, setIsAwards] = useState(true)
-  const [datesOnTimeline, setDatesOnTimeline] = useState([])
-  const [closestDate, setClosestDate] = useState('')
+  // const [isAwards, setIsAwards] = useState(true)
+  // const [datesOnTimeline, setDatesOnTimeline] = useState([])
+  // const [closestDate, setClosestDate] = useState('')
 
-  useEffect(() => {
-    const checkDates = () => {
-      if (tournament.date === undefined) return
-      const upcomingDates = []
-      const currentDate = moment()
+  // useEffect(() => {
+  //   const checkDates = () => {
+  //     if (tournament.date === undefined) return
+  //     const upcomingDates = []
+  //     const currentDate = moment()
 
-      tournament.date.forEach((date, index) => {
-        if (moment(date).isAfter(currentDate) && upcomingDates.length < 5) {
-          upcomingDates.push(date)
-        }
-      })
+  //     tournament.date.forEach((date, index) => {
+  //       if (moment(date).isAfter(currentDate) && upcomingDates.length < 5) {
+  //         upcomingDates.push(date)
+  //       }
+  //     })
 
-      upcomingDates.sort((a,b) => {
-        return new Date(a) - new Date(b)
-      })
+  //     upcomingDates.sort((a,b) => {
+  //       return new Date(a) - new Date(b)
+  //     })
       
-      const closestDate = upcomingDates[0]
+  //     const closestDate = upcomingDates[0]
       
-      //check if the index is different than 0 and either add 1 at the beginning or add 1 to the end
-      // const datesIndex = tournament.date.indexOf(closestDate)
+  //     //check if the index is different than 0 and either add 1 at the beginning or add 1 to the end
+  //     // const datesIndex = tournament.date.indexOf(closestDate)
 
-      setDatesOnTimeline(upcomingDates)
-      setClosestDate(closestDate)
-    }
-    checkDates()
-  }, [tournament.date])
+  //     setDatesOnTimeline(upcomingDates)
+  //     setClosestDate(closestDate)
+  //   }
+  //   checkDates()
+  // }, [tournament.date])
 
   if (router.isFallback) {
     return <h1>Loading</h1>
   }
 
-  const AwardsComponent = () => {
-    if (tournament.prizepool.length > 0) {
-      return tournament.prizepool.map((prize, index) => {
-        return (
-          <div key={index} className="bg-green-100 px-2 py-1 font-semibold rounded">
-            {prize}
-          </div>
-        )
-      })
-    } else {
-      return <div className="col-span-2 text-center text-red-600 my-2">Prawdopodobnie nie dodaliśmy jeszcze nagród dla tego turnieju. Przepraszamy za utrudnienia!</div>
-    }
-  }
+  // const AwardsComponent = () => {
+  //   if (tournament.prizepool.length > 0) {
+  //     return tournament.prizepool.map((prize, index) => {
+  //       return (
+  //         <div key={index} className="bg-green-100 px-2 py-1 font-semibold rounded">
+  //           {prize}
+  //         </div>
+  //       )
+  //     })
+  //   } else {
+  //     return <div className="col-span-2 text-center text-red-600 my-2">Prawdopodobnie nie dodaliśmy jeszcze nagród dla tego turnieju. Przepraszamy za utrudnienia!</div>
+  //   }
+  // }
   
-  const ScoringComponent = () => {
-    if (tournament.scoring.length > 0) {
-      return tournament.scoring.map((score, index) => {
-        return (
-          <div key={index} className="bg-green-100 px-2 py-1 font-semibold rounded">
-            {score}
-          </div>
-        )
-      })
-    } else {
-      return <div className="col-span-2 text-center text-red-600 my-2">Prawdopodobnie nie dodaliśmy jeszcze punktacji dla tego turnieju. Przepraszamy za utrudnienia!</div>
-    }
-  }
+  // const ScoringComponent = () => {
+  //   if (tournament.scoring.length > 0) {
+  //     return tournament.scoring.map((score, index) => {
+  //       return (
+  //         <div key={index} className="bg-green-100 px-2 py-1 font-semibold rounded">
+  //           {score}
+  //         </div>
+  //       )
+  //     })
+  //   } else {
+  //     return <div className="col-span-2 text-center text-red-600 my-2">Prawdopodobnie nie dodaliśmy jeszcze punktacji dla tego turnieju. Przepraszamy za utrudnienia!</div>
+  //   }
+  // }
 
   return (
     <>
