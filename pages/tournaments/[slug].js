@@ -4,11 +4,48 @@ import Head from "next/head";
 import moment from "moment";
 import Image from "next/image";
 import { ChipText } from "../../components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import getTimeleft from "../../helpers/timerHelper";
 
 export default function TournamentPage({tournament}) {
-
   const [isAwards, setIsAwards] = useState(true)
+  const [datesOnTimeline, setDatesOnTimeline] = useState([])
+  const [closestDate, setClosestDate] = useState('')
+  const [closestDateFormatted, setClosestDateFormatted] = useState({days: 0, hours: 0, minutes: 0, seconds: 0})
+
+  useEffect(() => {
+    const checkDates = () => {
+      const upcomingDates = []
+      const currentDate = moment()
+
+      tournament.date.forEach((date, index) => {
+        if (moment(date).isAfter(currentDate) && upcomingDates.length < 5) {
+          upcomingDates.push(date)
+        }
+      })
+
+      upcomingDates.sort((a,b) => {
+        return new Date(a) - new Date(b)
+      })
+      
+      const closestDate = upcomingDates[0]
+      
+      //check if the index is different than 0 and either add 1 at the beginning or add 1 to the end
+      // const datesIndex = tournament.date.indexOf(closestDate)
+
+      setDatesOnTimeline(upcomingDates)
+      setClosestDate(closestDate)
+    }
+    checkDates()
+  }, [tournament.date])
+
+  useEffect(() => {
+    const timerInterval = setInterval(() => {
+      const time = getTimeleft(closestDate)
+      setClosestDateFormatted(time)
+    }, 1000)
+    return () => clearInterval(timerInterval)
+  }, [closestDate])
 
   const router = useRouter()
   if (router.isFallback) {
@@ -49,39 +86,57 @@ export default function TournamentPage({tournament}) {
         <title>COMPNITE.PL - Fortnite Competitive</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div className="my-14 container mx-auto bg-white h-full rounded shadow-lg py-6 px-4 md:px-6 lg:px-12 xl:px-36 space-y-6">
+      <div className="my-8 md:my-16 container mx-auto bg-white h-full rounded shadow-lg py-6 px-4 md:px-6 lg:px-12 xl:px-36 space-y-8">
         <h2 className="text-2xl uppercase font-semibold text-center">{tournament.name}</h2>
 
-        <div className="flex my-6 justify-center flex-row overflow-x-auto">
-          {tournament.date.map((date, index) => {
+        <div className="flex my-6 flex-row overflow-x-auto md:justify-center">
+          {datesOnTimeline.map((date, index) => {
             if (index === 0) {
               return (
-                <div className="flex flex-col" key={index}>
+                <div key={index} className="flex flex-col items-center">
                   <div className="flex items-center">
-                    <div className="w-7 h-7 bg-green-900 rounded-full "></div>
-                    <div className="h-2 w-24 bg-green-100"></div>
+                    <div className="h-2 w-16 bg-transparent"></div>
+                    <div className="w-6 h-6 bg-green-900 rounded-full"></div>
+                    <div className="h-2 w-16 bg-green-100"></div>
                   </div>
-                  <p className="mt-1 font-semibold relative -left-7 text-gray-600">{moment(date).format('HH:mm, DD.MM')}</p>
+                  <span className="font-semibold mt-2 text-gray-600">{moment(date).format('HH:mm, DD.MM')}</span>
                 </div>
               )
             } 
-            else if (index === tournament.date.length - 1) {
+            else if (tournament.date.indexOf(date) === tournament.date.length - 1) {
               return (
-                <div className="flex flex-col" key={index}>
+                <div key={index} className="flex flex-col items-center">
                   <div className="flex items-center">
-                    <div className="w-7 h-7 bg-green-100 rounded-full border-4 border-white"></div>
+                    <div className="h-2 w-16 bg-green-100"></div>
+                    <div className="w-6 h-6 bg-green-100 rounded-full border-4 border-white"></div>
+                    <div className="h-2 w-16 bg-transparent"></div>
                   </div>
-                  <p className="mt-1 relative -left-7 text-gray-600">{moment(date).format('HH:mm, DD.MM')}</p>
+                  <span className="mt-2 text-gray-600">{moment(date).format('HH:mm, DD.MM')}</span>
                 </div>
               )
-            } else {
+            } 
+            else if (index === datesOnTimeline.length - 1) {
               return (
-                <div className="flex flex-col" key={index}>
+                <div key={index} className="flex flex-col items-center">
                   <div className="flex items-center">
-                    <div className="w-7 h-7 bg-green-100 rounded-full border-4 border-white"></div>
-                    <div className="h-2 w-24 bg-green-100"></div>
+                    <div className="h-2 w-16 bg-green-100"></div>
+                    <div className="w-6 h-6 bg-green-100 rounded-full border-4 border-white"></div>
+                    <div className="h-2 w-16 bg-gradient-to-r from-green-100 to-white"></div>
                   </div>
-                  <p className="mt-1 relative -left-7 text-gray-600">{moment(date).format('HH:mm, DD.MM')}</p>
+                  <span className="mt-2 text-gray-600">{moment(date).format('HH:mm, DD.MM')}</span>
+                </div>
+              )
+            } 
+            
+            else {
+              return (
+                <div key={index} className="flex flex-col items-center">
+                  <div className="flex items-center">
+                    <div className="h-2 w-16 bg-green-100"></div>
+                    <div className="w-6 h-6 bg-green-100 rounded-full border-4 border-white"></div>
+                    <div className="h-2 w-16 bg-green-100"></div>
+                  </div>
+                  <span className="mt-2 text-gray-600">{moment(date).format('HH:mm, DD.MM')}</span>
                 </div>
               )
             }
@@ -96,19 +151,43 @@ export default function TournamentPage({tournament}) {
               objectFit='cover'
               layout="fill"
               className="rounded"
+              priority
             />
           </div>
-          <div className="md:col-span-5 md:h-96 flex items-start flex-col space-y-1 md:space-y-3">
-            <h3 className="font-semibold text-2xl md:text-3xl">{tournament.name.toUpperCase()}</h3>
-            <ChipText text={tournament.mode.toUpperCase()}/>
-            <p className="text-gray-600">{tournament.description}</p>
-            <div className="flex flex-col items-start">
-              <span className="font-semibold">Wymagana ranga:</span>
-              <span className="mt-1"><ChipText text={tournament.requiredArenaRank.toUpperCase()}/></span>
+          <div className="md:col-span-5 flex items-start justify-between flex-col space-y-4 md:space-y-12">
+            <div className="space-y-1">
+              <h3 className="font-semibold text-2xl md:text-3xl">{tournament.name.toUpperCase()}</h3>
+              <ChipText text={tournament.mode.toUpperCase()}/>
+              <p className="text-gray-600">{tournament.description}</p>
+              <div className="flex flex-col items-start">
+                <span className="font-semibold">Wymagana ranga:</span>
+                <span className="mt-1"><ChipText text={tournament.requiredArenaRank.toUpperCase()}/></span>
+              </div>
+              <div className="flex flex-col items-start">
+                <span className="font-semibold">Organizator:</span>
+                <span className="mt-1"><ChipText text={tournament.tournamentSource}/></span>
+              </div>
             </div>
-            <div className="flex flex-col items-start">
-              <span className="font-semibold">Organizator:</span>
-              <span className="mt-1"><ChipText text={tournament.tournamentSource}/></span>
+            <div className="w-full md:w-fit">
+              <h4 className="uppercase text-center font-semibold text-xl">Startuje za:</h4>
+              <div className='mt-2 text-center gap-2 grid grid-cols-4'>
+                <div className='w-full'>
+                  <span>Dni</span>
+                  <div className='p-2 bg-red-600 rounded text-lg font-semibold text-white'>{closestDateFormatted.days}</div>
+                </div>
+                <div className='w-full'>
+                  <span>Godziny</span>
+                  <div className='p-2 bg-red-600 rounded text-lg font-semibold text-white'>{closestDateFormatted.hours}</div>
+                </div>
+                <div className='w-full'>
+                  <span>Minuty</span>
+                  <div className='p-2 bg-red-600 rounded text-lg font-semibold text-white'>{closestDateFormatted.minutes}</div>
+                </div>
+                <div className='w-full'>
+                  <span>Sekundy</span>
+                  <div className='p-2 bg-red-600 rounded text-lg font-semibold text-white'>{closestDateFormatted.seconds}</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

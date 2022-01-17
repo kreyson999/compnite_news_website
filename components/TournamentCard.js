@@ -1,24 +1,16 @@
 import Image from 'next/image'
 import { ChipText } from '.';
-import moment from 'moment';
 import { useEffect, useState } from 'react';
+import getTimeleft from '../helpers/timerHelper'
 
 const TournamentCard = ({tournament, ended}) => {
   const [currentDate, setCurrentDate] = useState({days: 0, hours: 0, minutes: 0, seconds: 0})
 
   useEffect(() => {
-    const getDateTime = () => {
-      const currentDate = moment()
-      let difference = moment(tournament.date).diff(currentDate)
-      
-      let days = Math.floor(difference / (1000 * 60 * 60 * 24))
-      let hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      let seconds = Math.floor((difference % (1000 * 60)) / 1000);
-      setCurrentDate({days, hours, minutes, seconds})
-    }
-    getDateTime()
-    const dateTimer = setInterval(getDateTime, 1000)
+    const dateTimer = setInterval(() => {
+      const time = getTimeleft(tournament.date)
+      setCurrentDate(time)
+    }, 1000)
     return () => clearInterval(dateTimer)
   }, [tournament.date])
 
