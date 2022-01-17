@@ -9,6 +9,7 @@ module.exports = {
         'green': {
           100: '#D4EAE7',
           900: '#28978A',
+          800: '#3D403F',
         },
         'gray': {
           400: '#C4C4C4',

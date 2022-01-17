@@ -3,6 +3,8 @@ import { useEffect, useReducer, useState } from 'react';
 import { getUpcomingTournaments } from '../services';
 import moment from 'moment';
 import filtersEnum from '../helpers/filtersEnum'
+import Image from 'next/image';
+import TournamentFilters from './TournamentFilters';
 
 const initialFilters = {
   [filtersEnum.solo]: false,
@@ -195,11 +197,6 @@ const TournamentsMainSection = () => {
     filterTournaments();
   }, [state, upcomingTournaments])
 
-  const handleClearingFilters = (e) => {
-    e.preventDefault();
-    dispatch({type: 'clear'})
-  }
-
   return (
     <>
       <main className='col-span-1 md:col-span-8 space-y-8'>
@@ -222,36 +219,7 @@ const TournamentsMainSection = () => {
       </main>
       <aside className='col-span-1 md:col-span-4'>
         <SectionTitle border text={"Filtruj"}/>
-        <form>
-          <div className='flex flex-col'>
-            <h6 className='font-semibold'>Tryb:</h6>
-            <FiltersCheckbox name={filtersEnum.solo} onChange={dispatch} value={state[filtersEnum.solo]}/>
-            <FiltersCheckbox name={filtersEnum.duo} onChange={dispatch} value={state[filtersEnum.duo]} />
-            <FiltersCheckbox name={filtersEnum.trio} onChange={dispatch} value={state[filtersEnum.trio]} />
-            <FiltersCheckbox name={filtersEnum.squad} onChange={dispatch} value={state[filtersEnum.squad]} />
-
-            <h6 className='font-semibold'>Ranga turnieju:</h6>
-            <FiltersCheckbox name={filtersEnum.open} onChange={dispatch} value={state[filtersEnum.open]}/>
-            <FiltersCheckbox name={filtersEnum.contender} onChange={dispatch} value={state[filtersEnum.contender]}/>
-            <FiltersCheckbox name={filtersEnum.champion} onChange={dispatch} value={state[filtersEnum.champion]}/>
-            <FiltersCheckbox name={filtersEnum.pro} onChange={dispatch} value={state[filtersEnum.pro]}/>
-
-            <h6 className='font-semibold'>Organizator:</h6>
-            <FiltersCheckbox name={filtersEnum.fortnite} onChange={dispatch} value={state[filtersEnum.fortnite]}/>
-            <FiltersCheckbox name={filtersEnum.rematch} onChange={dispatch} value={state[filtersEnum.rematch]}/>
-            <FiltersCheckbox name={filtersEnum.warlegend} onChange={dispatch} value={state[filtersEnum.warlegend]}/>
-            <FiltersCheckbox name={filtersEnum.other} onChange={dispatch} value={state[filtersEnum.other]}/>
-
-            <h6 className='font-semibold'>Typ nagrody:</h6>
-            <FiltersCheckbox name={filtersEnum.money} onChange={dispatch} value={state[filtersEnum.money]}/> 
-            <FiltersCheckbox name={filtersEnum.hype} onChange={dispatch} value={state[filtersEnum.hype]}/> 
-            <FiltersCheckbox name={filtersEnum.skin} onChange={dispatch} value={state[filtersEnum.skin]}/> 
-
-            <h6 className='font-semibold'>Inne:</h6>
-            <FiltersCheckbox name={filtersEnum.qualifications} onChange={dispatch} value={state[filtersEnum.qualifications]}/>
-          </div>
-          <button onClick={handleClearingFilters} className='text-center w-full bg-green-900 text-lg mt-2 py-2 text-white rounded'>Wyczyść</button>
-        </form>
+        <TournamentFilters dispatch={dispatch} state={state} filteredTournamentsLength={filteredTournaments.length} />
       </aside>
     </>
   );

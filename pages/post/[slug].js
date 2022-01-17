@@ -17,7 +17,7 @@ export default function PostPage({post}) {
       </Head>
       <header className='container mx-auto px-2 py-8 md:py-12 lg:px-32 text-center grid place-items-center'>
         <FormattedDate date={post.createdAt}/>
-        <h1 className="font-bold text-xl md:text-2xl md:mb-2">{post.title}</h1>
+        <h1 className="font-extrabold text-xl md:text-3xl md:mb-2 uppercase">{post.title}</h1>
         <CategoryBox category={post.category.name}/>
       </header>
       <div className="bg-white w-full py-6 md:py-12">
