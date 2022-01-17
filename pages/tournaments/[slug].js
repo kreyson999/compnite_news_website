@@ -79,7 +79,8 @@ export default function TournamentPage({tournament}) {
         <title>COMPNITE.PL - Fortnite Competitive</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div className="my-8 md:my-16 container mx-auto bg-white h-full rounded shadow-lg py-6 px-4 md:px-6 lg:px-12 xl:px-36 space-y-8">
+      <div>test</div>
+      {/* <div className="my-8 md:my-16 container mx-auto bg-white h-full rounded shadow-lg py-6 px-4 md:px-6 lg:px-12 xl:px-36 space-y-8">
         <h2 className="text-2xl uppercase font-semibold text-center">{tournament.name}</h2>
 
         <div className="flex my-6 flex-row overflow-x-auto md:justify-center">
@@ -172,8 +173,14 @@ export default function TournamentPage({tournament}) {
 
         <div className="border border-black rounded divide-y divide-black">
           <div className="flex divide-x divide-black">
-            <button onClick={() => setIsAwards(true)} className={`w-full p-1 ${isAwards ? 'bg-green-900 text-white' : 'bg-green-100'}`}>Nagrody</button>
-            <button onClick={() => setIsAwards(false)} className={`w-full p-1 ${isAwards ? 'bg-green-100' : 'bg-green-900 text-white'}`}>Punktacja</button>
+            <button 
+              onClick={() => setIsAwards(true)} 
+              className={`w-full p-1 ${isAwards ? 'bg-green-900 text-white' : 'bg-green-100'}`}
+            >Nagrody</button>
+            <button 
+              onClick={() => setIsAwards(false)} 
+              className={`w-full p-1 ${isAwards ? 'bg-green-100' : 'bg-green-900 text-white'}`}
+            >Punktacja</button>
           </div>
           <div className="p-2 grid grid-cols-2 gap-2">
             {isAwards ? <AwardsComponent/> : <ScoringComponent/>}
@@ -181,10 +188,28 @@ export default function TournamentPage({tournament}) {
         </div>
 
         <div className="flex gap-4">
-          {tournament.linkToRegister ? <a href={tournament.linkToRegister} target={"_blank"} rel="noreferrer" className="bg-green-900 p-2 rounded text-white text-center font-semibold w-full">Rejestracja</a> : null}
-          {tournament.linkToTable ? <a href={tournament.linkToTable} target={"_blank"} rel="noreferrer" className="bg-green-900 p-2 rounded text-white text-center font-semibold w-full">Tabela</a> : null}
+          {tournament.linkToRegister ? 
+          (<a 
+            href={tournament.linkToRegister} 
+            target={"_blank"} 
+            rel="noreferrer" 
+            className="bg-green-900 p-2 rounded text-white text-center font-semibold w-full"
+          >
+            Rejestracja
+          </a>) 
+          : null}
+          {tournament.linkToTable ? 
+          (<a 
+            href={tournament.linkToTable} 
+            target={"_blank"} 
+            rel="noreferrer" 
+            className="bg-green-900 p-2 rounded text-white text-center font-semibold w-full"
+          >
+            Tabela
+          </a>) 
+          : null}
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
