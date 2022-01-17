@@ -5,17 +5,18 @@ import moment from "moment";
 import Image from "next/image";
 import { ChipText } from "../../components";
 import { useState, useEffect } from "react";
-import getTimeleft from "../../helpers/timerHelper";
+import { TournamentTimer } from "../../components";
+
 
 export default function TournamentPage({tournament}) {
   const router = useRouter()
   const [isAwards, setIsAwards] = useState(true)
   const [datesOnTimeline, setDatesOnTimeline] = useState([])
   const [closestDate, setClosestDate] = useState('')
-  const [closestDateFormatted, setClosestDateFormatted] = useState({days: 0, hours: 0, minutes: 0, seconds: 0})
 
   useEffect(() => {
     const checkDates = () => {
+      if (tournament.date === undefined) return
       const upcomingDates = []
       const currentDate = moment()
 
@@ -39,14 +40,6 @@ export default function TournamentPage({tournament}) {
     }
     checkDates()
   }, [tournament.date])
-
-  useEffect(() => {
-    const timerInterval = setInterval(() => {
-      const time = getTimeleft(closestDate)
-      setClosestDateFormatted(time)
-    }, 1000)
-    return () => clearInterval(timerInterval)
-  }, [closestDate])
 
   if (router.isFallback) {
     return <h1>Loading</h1>
@@ -171,22 +164,7 @@ export default function TournamentPage({tournament}) {
             <div className="w-full md:w-fit">
               <h4 className="uppercase text-center font-semibold text-xl">Startuje za:</h4>
               <div className='mt-2 text-center gap-2 grid grid-cols-4'>
-                <div className='w-full'>
-                  <span>Dni</span>
-                  <div className='p-2 bg-red-600 rounded text-lg font-semibold text-white'>{closestDateFormatted.days}</div>
-                </div>
-                <div className='w-full'>
-                  <span>Godziny</span>
-                  <div className='p-2 bg-red-600 rounded text-lg font-semibold text-white'>{closestDateFormatted.hours}</div>
-                </div>
-                <div className='w-full'>
-                  <span>Minuty</span>
-                  <div className='p-2 bg-red-600 rounded text-lg font-semibold text-white'>{closestDateFormatted.minutes}</div>
-                </div>
-                <div className='w-full'>
-                  <span>Sekundy</span>
-                  <div className='p-2 bg-red-600 rounded text-lg font-semibold text-white'>{closestDateFormatted.seconds}</div>
-                </div>
+                <TournamentTimer time={closestDate} full/>
               </div>
             </div>
           </div>

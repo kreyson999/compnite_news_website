@@ -1,19 +1,7 @@
 import Image from 'next/image'
-import { ChipText } from '.';
-import { useEffect, useState } from 'react';
-import getTimeleft from '../helpers/timerHelper'
+import { ChipText, TournamentTimer } from '.';
 
 const TournamentCard = ({tournament, ended}) => {
-  const [currentDate, setCurrentDate] = useState({days: 0, hours: 0, minutes: 0, seconds: 0})
-
-  useEffect(() => {
-    const dateTimer = setInterval(() => {
-      const time = getTimeleft(tournament.date)
-      setCurrentDate(time)
-    }, 1000)
-    return () => clearInterval(dateTimer)
-  }, [tournament.date])
-
 
   return (
     <a href={`/tournaments/${tournament.slug}`} className='cursor-pointer bg-green-100 rounded relative grid grid-rows-2 shadow-lg transition duration-500 transform hover:-translate-y-1'>
@@ -41,32 +29,7 @@ const TournamentCard = ({tournament, ended}) => {
         </div>)
         :  
         (<div className='mt-2 flex justify-evenly text-center space-x-2 border-t-2 border-gray-600 pt-4 mt-4'>
-          {
-            currentDate.days === 0 ? null : 
-            (
-              <div className='w-full'>
-                <span>Dni</span>
-                <div className='p-2 bg-red-600 rounded text-lg font-semibold text-white'>{currentDate.days}</div>
-              </div>
-            )
-          }
-          <div className='w-full'>
-            <span>Godziny</span>
-            <div className='p-2 bg-red-600 rounded text-lg font-semibold text-white'>{currentDate.hours}</div>
-          </div>
-          <div className='w-full'>
-            <span>Minuty</span>
-            <div className='p-2 bg-red-600 rounded text-lg font-semibold text-white'>{currentDate.minutes}</div>
-          </div>
-          {
-            currentDate.days !== 0 ? null : 
-            (
-              <div className='w-full'>
-                <span>Sekundy</span>
-                <div className='p-2 bg-red-600 rounded text-lg font-semibold text-white'>{currentDate.seconds}</div>
-              </div>
-            )
-          }
+          <TournamentTimer time={tournament.date}/>
         </div>)}
       </div>
     </a>
