@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import getTimeleft from "../../helpers/timerHelper";
 
 export default function TournamentPage({tournament}) {
+  const router = useRouter()
   const [isAwards, setIsAwards] = useState(true)
   const [datesOnTimeline, setDatesOnTimeline] = useState([])
   const [closestDate, setClosestDate] = useState('')
@@ -47,7 +48,6 @@ export default function TournamentPage({tournament}) {
     return () => clearInterval(timerInterval)
   }, [closestDate])
 
-  const router = useRouter()
   if (router.isFallback) {
     return <h1>Loading</h1>
   }
