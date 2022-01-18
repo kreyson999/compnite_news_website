@@ -202,9 +202,59 @@ export const getTournamentDetails = async (slug) => {
     const result = await request(graphqlAPI, query, { slug: slug})
     return result.tournament
   } catch (error) {
-    throw Error(`There is some problem with fetching urls of post ${error}`)
+    throw Error(`There is some problem with fetching details of tournament ${error}`)
   }
 }
+export const getTournamentById = async (id) => {
+  const query = gql`
+    query GetTournamentById($id: ID!) {
+      tournament(where: {id: $id}) {
+        name
+        date
+        image {
+          url
+        }
+        mode
+        linkToRegister
+        prizeType
+        requiredArenaRank
+        slug
+        tournamentSource
+        prizepool
+      }
+    }
+  `
+  try {
+    const result = await request(graphqlAPI, query, { id: id})
+    return result.tournament
+  } catch (error) {
+    throw Error(`There is some problem with fetching tournament by id ${error}`)
+  }
+}
+export const getPostById = async (id) => {
+  const query = gql`
+    query GetPostById($id: ID!) {
+      post(where: {id: $id}) {
+        createdAt
+        image {
+          url
+        }
+        slug
+        title
+        category {
+          name
+        }
+      }
+    }
+  `
+  try {
+    const result = await request(graphqlAPI, query, { id: id})
+    return result.post
+  } catch (error) {
+    throw Error(`There is some problem with fetching post by id ${error}`)
+  }
+}
+
 
 // ####################
 // OTHER

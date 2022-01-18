@@ -40,10 +40,10 @@ const Navbar = () => {
           alt="Menu"
           />
         </div>
-        <div className={`fixed px-2 py-2 z-50 shadow-lg bottom-0 w-full rounded-t-lg flex justify-evenly bg-green-800 space-x-2 md:block md:bg-transparent md:shadow-none md:static md:w-auto transition md:py-0 ${isScrolling ? 'opacity-30 md:opacity-100' : null}`}>
+        <div className={`fixed px-2 py-2 z-50 shadow-lg bottom-0 w-full rounded-t-lg flex justify-evenly bg-green-800 space-x-2 md:block md:bg-transparent md:shadow-none md:static md:w-auto transition duration-500  md:py-0 ${isScrolling ? 'opacity-30 md:opacity-100' : null}`}>
           <NavLink href={'/'} text={'Główna'}/>
           {/* <NavLink href={'/players'} text={'Gracze'}/> */}
-          <NavLink href={''} text={'Na żywo'} block/>
+          {/* <NavLink href={'/'} text={'Na żywo'} block/> */}
           <NavLink href={'/tournaments'} text={'Turnieje'} isHero={true}/>
         </div>
       </div>

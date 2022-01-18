@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { ChipText, TournamentTimer } from '.';
 
-const TournamentCard = ({tournament, ended}) => {
+const TournamentCard = ({tournament, ended, withoutTimer}) => {
 
   return (
     <a href={`/tournaments/${tournament.slug}`} className='cursor-pointer bg-green-100 rounded relative grid grid-rows-2 shadow-lg transition duration-500 transform hover:-translate-y-1'>
@@ -22,7 +22,11 @@ const TournamentCard = ({tournament, ended}) => {
           {tournament.linkToRegister ? <ChipText text={'Rejestracja'}/> : null}
           {tournament.requiredArenaRank ? <ChipText text={tournament.requiredArenaRank.toUpperCase()}/> : null}
         </div>
-        {ended ? (
+        {withoutTimer ? null : (
+          <div className='mt-2 flex justify-evenly text-center space-x-2 border-t-2 border-gray-600 pt-4 mt-4'>
+            <TournamentTimer time={tournament.date}/>
+          </div>)}
+        {/* {ended ? (
         <div className='mt-2 flex flex-col justify-evenly text-center space-y-2 border-t-2 border-gray-600 pt-4 mt-4'>
           <h5 className='text-lg'>Zwyciezca:</h5>
           <div className='p-2 bg-green-600 rounded text-lg font-semibold text-white'>KamiFN1</div>
@@ -30,7 +34,7 @@ const TournamentCard = ({tournament, ended}) => {
         :  
         (<div className='mt-2 flex justify-evenly text-center space-x-2 border-t-2 border-gray-600 pt-4 mt-4'>
           <TournamentTimer time={tournament.date}/>
-        </div>)}
+        </div>)} */}
       </div>
     </a>
   );
