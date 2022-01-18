@@ -15,7 +15,6 @@ const PostContent = ({content}) => {
         const checkTextChildren = (obj) => {
           return obj.children.map((child, childIndex) => {
             let modifiedText = child.text;
-            console.log(child)
             if (child) {
               if (child.bold) {
                 modifiedText = (<b key={childIndex}>{child.text}</b>);
@@ -29,7 +28,7 @@ const PostContent = ({content}) => {
                 modifiedText = (<u key={childIndex}>{child.text}</u>);
               }
               if (child.type === 'link') {
-                modifiedText = (<a className="text-green-900 font-semibold" target={"_blank"} href={child.href} rel="noreferrer">{child.children[0].text}</a>)
+                modifiedText = (<a key={childIndex} className="text-green-900 font-semibold" target={"_blank"} href={child.href} rel="noreferrer">{child.children[0].text}</a>)
               }
             }
             return modifiedText

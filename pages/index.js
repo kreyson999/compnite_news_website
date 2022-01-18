@@ -21,7 +21,16 @@ export default function Home({featuredPost}) {
     <>
       <Head>
         <title>COMPNITE.PL - Fortnite Competitive</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="description" content={`Najlepsze miejsce dla profesjonalnych graczy Fortnite i nie tylko. Przeczytasz tutaj ciekawe e-sportowe artykuły oraz dowiesz się o najnowszych turniejach Fortnite!`}/>
+        
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="KJMM.PL - Fortnite Competitive" />
+        <meta property="og:description" content={`Najlepsze miejsce dla profesjonalnych graczy Fortnite i nie tylko. Przeczytasz tutaj ciekawe e-sportowe artykuły oraz dowiesz się o najnowszych turniejach Fortnite!`}/>
+        <meta property="og:url" content={`https://kjmm.pl/`} />
+        <meta property="og:site_name" content={"KJMM.PL"} />
+
+        <meta name="twitter:title" content="KJMM.PL - Fortnite Competitive" />
+        <meta name="twitter:description" content={`Najlepsze miejsce dla profesjonalnych graczy Fortnite i nie tylko. Przeczytasz tutaj ciekawe e-sportowe artykuły oraz dowiesz się o najnowszych turniejach Fortnite!`}/>
       </Head>
       {/* <div className='container mx-auto flex justify-end'>
         <div className='hidden md:block md:space-x-4 md:my-2 md:px-2 '>

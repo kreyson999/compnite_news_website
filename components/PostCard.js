@@ -13,7 +13,7 @@ const PostCard = ({row, post, small}) => {
           width={row ? 320 : 640}
           height={row ? 180 : 360}
           className='rounded'
-          alt='Post'
+          alt={`${post.title}`}
           />
           <div>
             {small ? null : <FormattedDate date={post.createdAt} />}

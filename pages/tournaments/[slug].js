@@ -162,7 +162,18 @@ export default function TournamentPage({tournament}) {
     <>
       <Head>
         <title>COMPNITE.PL - Fortnite Competitive</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="description" content={`${tournament.name} to turniej rozgrywany w trybie ${tournament.mode} przeznaczony dla graczy z rangi ${tournament.requiredArenaRank}. Kliknij, aby dowiedzieć się więcej!`}/>
+        
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={`${tournament.name}`} />
+        <meta property="og:description" content={`${tournament.name} to turniej rozgrywany w trybie ${tournament.mode} przeznaczony dla graczy z rangi ${tournament.requiredArenaRank}. Kliknij, aby dowiedzieć się więcej!`} />
+        <meta property="og:image" content={`${tournament.image.url}`} />
+        <meta property="og:url" content={`https://kjmm.pl/tournaments/${tournament.slug}`} />
+        <meta property="og:site_name" content={"KJMM.PL"} />
+
+        <meta name="twitter:title" content={`${tournament.name}`}/>
+        <meta name="twitter:description" content={`${tournament.name} to turniej rozgrywany w trybie ${tournament.mode} przeznaczony dla graczy z rangi ${tournament.requiredArenaRank}. Kliknij, aby dowiedzieć się więcej!`} />
+        <meta name="twitter:image" content={`${tournament.image.url}`} />
       </Head>
       <div className="my-8 md:my-16 container mx-auto bg-white h-full rounded shadow-lg py-6 px-4 md:px-6 lg:px-12 xl:px-36 space-y-8">
         <TournamentMainSection tournament={tournament}/>

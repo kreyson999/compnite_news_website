@@ -146,6 +146,7 @@ export const getPostDetails = async (slug) => {
         content {
           raw
         }
+        excerpt
       }
     }
   `
@@ -181,6 +182,7 @@ export const getTournamentDetails = async (slug) => {
   const query = gql`
     query GetTournamentDetails($slug: String!) {
       tournament(where: {slug: $slug}) {
+        slug
         createdAt
         date
         description

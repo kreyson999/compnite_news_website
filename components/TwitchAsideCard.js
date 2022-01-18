@@ -8,7 +8,7 @@ const TwitchAsideCard = ({name, viewer_count, link}) => {
         src={'/assets/icons/twitch.svg'}
         width={32}
         height={32}
-        alt='Twitch'
+        alt={`${name}`}
         />
         <p className='font-semibold text-lg hover:pl-1 duration-200 cursor-pointer'>{name}</p>
       </div>

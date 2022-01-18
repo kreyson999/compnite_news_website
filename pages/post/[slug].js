@@ -14,6 +14,23 @@ export default function PostPage({post}) {
     <>
       <Head>
         <title>{post.title}</title>
+        <link
+          rel="canonical"
+          href={`https://kjmm.pl/post/${post.slug}`}
+          key="canonical"
+        />
+        <meta name="description" content={`${post.excerpt}`}/>
+
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={`${post.title}`} />
+        <meta property="og:description" content={`${post.excerpt}`}/>
+        <meta property="og:image" content={`${post.image.url}`} />
+        <meta property="og:url" content={`https://kjmm.pl/post/${post.slug}`} />
+        <meta property="og:site_name" content={"KJMM.PL"} />
+
+        <meta name="twitter:title" content={`${post.title}`} />
+        <meta name="twitter:description" content={`${post.excerpt}`}/>
+        <meta name="twitter:image" content={`${post.image.url}`} />
       </Head>
       <header className='container mx-auto px-2 py-8 md:py-12 lg:px-32 text-center grid place-items-center'>
         <FormattedDate date={post.createdAt}/>
@@ -37,7 +54,6 @@ export default function PostPage({post}) {
             <HomeCategory category={"Wygrane"}/>
             <HomeCategory category={"Meta"}/>
             <HomeCategory category={"Turnieje"}/>
-            <HomeCategory category={"Gracze"}/>
           </div>
         </div>
       </div>
