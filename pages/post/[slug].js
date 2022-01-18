@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Head from "next/head"
-import { FormattedDate, CategoryBox, Sidebar, PostContent, HomeCategory } from "../../components";
+import { FormattedDate, CategoryBox, Sidebar, PostContent, HomeCategory, Loader } from "../../components";
 import { getPostDetails, getPostUrls } from "../../services";
 import { useRouter } from 'next/router'
 
 export default function PostPage({post}) {
   const router = useRouter()
   if (router.isFallback) {
-    return <h1>Loading</h1>
+    return <Loader/>
   }
   
   return (

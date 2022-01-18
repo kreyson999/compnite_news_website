@@ -3,40 +3,32 @@ import { useRouter } from 'next/router'
 import Head from "next/head";
 import moment from "moment";
 import Image from "next/image";
-import { ChipText, TournamentsTimeline } from "../../components";
+import { ChipText, Loader, TournamentsTimeline } from "../../components";
 import { useState, useEffect } from "react";
 import { TournamentTimer } from "../../components";
+import getClosestDate from "../../helpers/getClosestDate";
 
 
 const TournamentMainSection = ({tournament}) => {
 
   const [isAwards, setIsAwards] = useState(true)
-  const [datesOnTimeline, setDatesOnTimeline] = useState([])
   const [closestDate, setClosestDate] = useState('')
+  const [isEnded, setIsEnded] = useState(false)
 
   useEffect(() => {
     const checkDates = () => {
       if (tournament.date === undefined) return
-      const upcomingDates = []
       const currentDate = moment()
-
-      tournament.date.forEach(date => {
-        if (moment(date).isAfter(currentDate) && upcomingDates.length < 5) {
-          upcomingDates.push(date)
-        }
-      })
-
-      upcomingDates.sort((a,b) => {
-        return new Date(a) - new Date(b)
-      })
-      
-      const closestDate = upcomingDates[0]
-      
-      //check if the index is different than 0 and either add 1 at the beginning or add 1 to the end
-      // const datesIndex = tournament.date.indexOf(closestDate)
-
-      setDatesOnTimeline(upcomingDates)
-      setClosestDate(closestDate)
+      // check if the tournament is ended or not
+      if (moment(tournament.date[tournament.date.length-1]).isAfter(currentDate)) {
+        // get closest date from helper
+        const closestDate = getClosestDate(tournament.date)
+        setClosestDate(closestDate)
+      } else {
+        // if last date is before current date than just set closest date to the last date of tournament
+        setClosestDate(tournament.date[tournament.date.length-1])
+        setIsEnded(true)
+      }
     }
     checkDates()
   }, [tournament.date])
@@ -73,7 +65,7 @@ const TournamentMainSection = ({tournament}) => {
     <>
       <h2 className="text-2xl uppercase font-semibold text-center">{tournament.name}</h2>
 
-      <TournamentsTimeline tournamentDates={tournament.date} datesOnTimeline={datesOnTimeline}/>
+      <TournamentsTimeline tournamentDates={tournament.date} closestDate={closestDate}/>
 
       <div className="grid grid-rows-2 md:grid-rows-none md:grid-cols-7 gap-4 md:gap-10">
         <div className="relative md:col-span-2 shadow-lg">
@@ -101,10 +93,19 @@ const TournamentMainSection = ({tournament}) => {
             </div>
           </div>
           <div className="w-full md:w-fit">
-            <h4 className="uppercase text-center font-semibold text-xl">Startuje za:</h4>
-            <div className='mt-2 text-center gap-2 grid grid-cols-4'>
-              <TournamentTimer time={closestDate} full/>
-            </div>
+            {isEnded ? (
+              <>
+                <h5 className='text-lg text-center'>Zwyciezca:</h5>
+                <div className='mt-2 py-2 px-4 text-center bg-green-600 rounded text-lg font-semibold text-white select-none '>{tournament.winner ?? 'TDA'}</div>
+              </>
+            ) : (
+              <>
+              <h4 className="uppercase text-center font-semibold text-xl">Startuje za:</h4>
+              <div className='mt-2 text-center gap-2 grid grid-cols-4 select-none'>
+                <TournamentTimer time={closestDate} full/>
+              </div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -131,7 +132,7 @@ const TournamentMainSection = ({tournament}) => {
           href={tournament.linkToRegister} 
           target={"_blank"} 
           rel="noreferrer" 
-          className="bg-green-900 p-2 rounded text-white text-center font-semibold w-full"
+          className="bg-green-900 p-2 rounded text-white text-center font-semibold w-full transition duration-500 transform hover:-translate-y-1"
         >
           Rejestracja
         </a>) 
@@ -141,7 +142,7 @@ const TournamentMainSection = ({tournament}) => {
           href={tournament.linkToTable} 
           target={"_blank"} 
           rel="noreferrer" 
-          className="bg-green-900 p-2 rounded text-white text-center font-semibold w-full"
+          className="bg-green-900 p-2 rounded text-white text-center font-semibold w-full transition duration-500 transform hover:-translate-y-1"
         >
           Tabela
         </a>) 
@@ -154,7 +155,7 @@ const TournamentMainSection = ({tournament}) => {
 export default function TournamentPage({tournament}) {
   const router = useRouter()
   if (router.isFallback) {
-    return <h1>Loading</h1>
+    return <Loader/>
   }
 
   return (

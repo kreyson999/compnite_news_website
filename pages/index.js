@@ -1,10 +1,22 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FormattedDate, HomeCategory, PostCard, SectionTitle, Sidebar } from '../components'
+import { useState, useEffect } from 'react'
+import { FormattedDate, HomeCategory, Loader, PostCard, SectionTitle, Sidebar } from '../components'
 import { getFeaturedPost, getRecentPosts } from '../services'
 
-export default function Home({featuredPost, recentPosts}) {
+export default function Home({featuredPost}) {
+
+  const [recentPosts, setRecentPosts] = useState([])
+
+  useEffect(() => {
+    const fetchRecentPosts = async () => {
+      const recentPosts = await getRecentPosts();
+      setRecentPosts(recentPosts)
+    }
+    fetchRecentPosts()
+  })
+
   return (
     <>
       <Head>
@@ -45,16 +57,15 @@ export default function Home({featuredPost, recentPosts}) {
             <main className='col-span-1 md:col-span-8'>
               <SectionTitle text="Ostatnie posty"/>
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-                {recentPosts.map(post => {
+                {recentPosts.length > 0 ? recentPosts.map(post => {
                   return <PostCard key={post.title} post={post}/> 
-                })}
+                }) : <Loader colSpan={3}/>}
               </div>
             </main>
             <Sidebar/>
             <HomeCategory category={"Wygrane"}/>
             <HomeCategory category={"Meta"}/>
             <HomeCategory category={"Turnieje"}/>
-            <HomeCategory category={"Gracze"}/>
           </div>
         </div>
       </div>
@@ -64,11 +75,9 @@ export default function Home({featuredPost, recentPosts}) {
 
 export async function getStaticProps() {
   const featuredPosts = await getFeaturedPost();
-  const recentPosts = await getRecentPosts();
   return {
     props: {
       featuredPost: featuredPosts[0],
-      recentPosts: recentPosts
     }
   }
 }

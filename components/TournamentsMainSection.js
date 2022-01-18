@@ -1,10 +1,10 @@
-import { FiltersCheckbox, SectionTitle, TournamentCard } from '.';
+import { Loader, SectionTitle, TournamentCard } from '.';
 import { useEffect, useReducer, useState } from 'react';
-import { getUpcomingTournaments } from '../services';
+import { getAllTournaments } from '../services';
 import moment from 'moment';
 import filtersEnum from '../helpers/filtersEnum'
-import Image from 'next/image';
 import TournamentFilters from './TournamentFilters';
+import getClosestDate from '../helpers/getClosestDate';
 
 const initialFilters = {
   [filtersEnum.solo]: false,
@@ -45,7 +45,7 @@ const TournamentsMainSection = () => {
 
   useEffect(() => {
     const fetchTournaments = async () => {
-      const fetchedTournaments = await getUpcomingTournaments();
+      const fetchedTournaments = await getAllTournaments();
       
       const formatTournaments = (tournaments) => {
         const upcomingTournaments = []
@@ -56,20 +56,10 @@ const TournamentsMainSection = () => {
         tournaments.forEach(tournament => {
           //check if the last date of the tournament is before current date
           if (moment(tournament.date[tournament.date.length - 1]).isBefore(currentDate)) {
+            tournament.date = tournament.date[tournament.date.length - 1]
             endedTournaments.push(tournament)
           } else {
-            const upcomingDates = []
-            // iterate through each date and check if the date is after current date
-            tournament.date.forEach(date => {
-              if (moment(date).isAfter(currentDate)) {
-                upcomingDates.push(date)
-              }
-            })
-            // sort an array
-            upcomingDates.sort((a,b) => {
-              return new Date(a) - new Date(b)
-            })
-            tournament.date = upcomingDates[0]
+            tournament.date = getClosestDate(tournament.date)
             upcomingTournaments.push(tournament)
           }
         })
@@ -205,16 +195,16 @@ const TournamentsMainSection = () => {
           {filteredTournaments.length > 0 ? filteredTournaments.sort((a,b) => {
             return new Date(a.date) - new Date(b.date)
           }).map((tournament, index) => (<TournamentCard key={index} tournament={tournament}/>)) 
-          : <h4 className="col-span-1 md:col-span-2 lg:col-span-3 md:my-2 md:my-8 text-red-600 font-semibold mx-auto">Brak turniejów do wyświetlenia!</h4>
+          : <Loader colSpan={3}/>
           
           }
         </div>
         <SectionTitle text="Zakończone turnieje"/>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
           {endedTournaments.length > 0 ? endedTournaments.sort((a,b) => {
-            return new Date(a.date) - new Date(b.date)
-          }).map((tournament, index) => (<TournamentCard key={index} tournament={tournament}/>)) :
-          <h4 className="col-span-1 md:col-span-2 lg:col-span-3 md:my-2 md:my-8 text-red-600 font-semibold mx-auto">Brak turniejów do wyświetlenia!</h4> }
+            return new Date(b.date) - new Date(a.date)
+          }).map((tournament, index) => (<TournamentCard key={index} tournament={tournament} ended={true}/>)) :
+          <Loader colSpan={3}/> }
         </div>
       </main>
       <aside className='col-span-1 md:col-span-4'>

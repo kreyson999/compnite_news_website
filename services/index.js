@@ -57,7 +57,7 @@ export const getRecentPosts = async () => {
   }
 }
 
-export const getUpcomingTournaments = async () => {
+export const getAllTournaments = async () => {
   const query = gql`
     query getUpcomingTournaments {
       tournaments(orderBy: date_ASC) {
@@ -73,6 +73,7 @@ export const getUpcomingTournaments = async () => {
         requiredArenaRank
         prizepool
         prizeType
+        winner
       }
     }
   `
@@ -195,6 +196,7 @@ export const getTournamentDetails = async (slug) => {
         requiredArenaRank
         tournamentSource
         scoring
+        winner
       }
     }
   `

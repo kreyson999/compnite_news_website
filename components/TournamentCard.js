@@ -22,19 +22,15 @@ const TournamentCard = ({tournament, ended, withoutTimer}) => {
           {tournament.linkToRegister ? <ChipText text={'Rejestracja'}/> : null}
           {tournament.requiredArenaRank ? <ChipText text={tournament.requiredArenaRank.toUpperCase()}/> : null}
         </div>
-        {withoutTimer ? null : (
-          <div className='mt-2 flex justify-evenly text-center space-x-2 border-t-2 border-gray-600 pt-4 mt-4'>
-            <TournamentTimer time={tournament.date}/>
-          </div>)}
-        {/* {ended ? (
-        <div className='mt-2 flex flex-col justify-evenly text-center space-y-2 border-t-2 border-gray-600 pt-4 mt-4'>
+        {withoutTimer ? null : ended ? 
+        // ended
+        (<div className='mt-2 flex flex-col justify-evenly text-center space-y-2 border-t-2 border-gray-600 pt-4 mt-4'>
           <h5 className='text-lg'>Zwyciezca:</h5>
-          <div className='p-2 bg-green-600 rounded text-lg font-semibold text-white'>KamiFN1</div>
-        </div>)
-        :  
+          <div className='p-2 bg-green-600 rounded text-lg font-semibold text-white'>{tournament.winner ?? 'TDA'}</div>
+        </div>) :
         (<div className='mt-2 flex justify-evenly text-center space-x-2 border-t-2 border-gray-600 pt-4 mt-4'>
           <TournamentTimer time={tournament.date}/>
-        </div>)} */}
+        </div>)}
       </div>
     </a>
   );

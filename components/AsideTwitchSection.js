@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SectionTitle, TwitchAsideCard } from ".";
+import { Loader, SectionTitle, TwitchAsideCard } from ".";
 import { getCurrentStreams } from "../services";
 
 const AsideTwitchSection = () => {
@@ -25,12 +25,7 @@ const AsideTwitchSection = () => {
       viewer_count={stream.viewer_count}
       link={`https://twitch.tv/${stream.user_login}`}
       />
-      )) : (
-      <h4 
-      className="col-span-5 md:my-2 md:my-8 text-red-600 font-semibold mx-auto"
-      >Wystąpił problem przy pobieraniu streamów z bazy danych. Przepraszamy!
-      </h4>
-      )}
+      )) : (<Loader/>)}
     </div>
   </>
   );
