@@ -181,10 +181,13 @@ export default function TournamentPage({tournament}) {
         <meta property="og:image" content={`${tournament.image.url}`} />
         <meta property="og:url" content={`https://kjmm.pl/tournaments/${tournament.slug}`} />
         <meta property="og:site_name" content={"KJMM.PL"} />
+        <meta property="og:image:width" content="1200"/>
+        <meta property="og:image:height" content="630"/>
 
         <meta name="twitter:title" content={`${tournament.name}`}/>
         <meta name="twitter:description" content={`${tournament.name} to turniej rozgrywany w trybie ${tournament.mode} przeznaczony dla graczy z rangi ${tournament.requiredArenaRank}. Kliknij, aby dowiedzieć się więcej!`} />
         <meta name="twitter:image" content={`${tournament.image.url}`} />
+        <meta name="twitter:card" content="summary_large_image"/>
       </Head>
       <div className="relative my-8 md:my-16 container mx-auto bg-white h-full rounded shadow-lg py-6 px-4 md:px-6 lg:px-12 xl:px-36 space-y-8">
         <TournamentMainSection tournament={tournament}/>

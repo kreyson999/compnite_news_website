@@ -28,9 +28,15 @@ export default function Home({featuredPost}) {
         <meta property="og:description" content={`Najlepsze miejsce dla profesjonalnych graczy Fortnite i nie tylko. Przeczytasz tutaj ciekawe e-sportowe artykuły oraz dowiesz się o najnowszych turniejach Fortnite!`}/>
         <meta property="og:url" content={`https://kjmm.pl/`} />
         <meta property="og:site_name" content={"KJMM.PL"} />
+        <meta property="og:image" content="/assets/website_card.png"/>
+        <meta property="og:image:width" content="1200"/>
+        <meta property="og:image:height" content="630"/>
+
 
         <meta name="twitter:title" content="KJMM.PL - Fortnite Competitive" />
         <meta name="twitter:description" content={`Najlepsze miejsce dla profesjonalnych graczy Fortnite i nie tylko. Przeczytasz tutaj ciekawe e-sportowe artykuły oraz dowiesz się o najnowszych turniejach Fortnite!`}/>
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:image" content="/assets/website_card.png" />
       </Head>
       {/* <div className='container mx-auto flex justify-end'>
         <div className='hidden md:block md:space-x-4 md:my-2 md:px-2 '>

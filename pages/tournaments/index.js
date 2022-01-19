@@ -13,9 +13,14 @@ export default function TournametsPage() {
         <meta property="og:description" content={`Wszystkie turnieje Fortnite w jednym miejscu. Klknij, aby zobaczyć!`}/>
         <meta property="og:url" content={`https://kjmm.pl/tournaments/`} />
         <meta property="og:site_name" content={"KJMM.PL"} />
+        <meta property="og:image" content="/assets/website_card.png"/>
+        <meta property="og:image:width" content="1200"/>
+        <meta property="og:image:height" content="630"/>
 
         <meta name="twitter:title" content="KJMM.PL - Turnieje" />
         <meta name="twitter:description" content={`Wszystkie turnieje Fortnite w jednym miejscu. Klknij, aby zobaczyć!`}/>
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:image" content="/assets/website_card.png" />
       </Head>
       <header className='container mx-auto px-2 py-8 md:py-12 lg:px-32 text-center grid place-items-center'>
         <h1 className="font-extrabold text-xl md:text-3xl md:mb-2 uppercase">Turnieje Fortnite</h1>

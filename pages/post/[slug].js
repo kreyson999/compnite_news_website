@@ -24,13 +24,16 @@ export default function PostPage({post}) {
         <meta property="og:type" content="article" />
         <meta property="og:title" content={`${post.title}`} />
         <meta property="og:description" content={`${post.excerpt}`}/>
-        <meta property="og:image" content={`${post.image.url}`} />
         <meta property="og:url" content={`https://kjmm.pl/post/${post.slug}`} />
         <meta property="og:site_name" content={"KJMM.PL"} />
+        <meta property="og:image" content={`${post.image.url}`} />
+        <meta property="og:image:width" content="1200"/>
+        <meta property="og:image:height" content="630"/>
 
         <meta name="twitter:title" content={`${post.title}`} />
         <meta name="twitter:description" content={`${post.excerpt}`}/>
         <meta name="twitter:image" content={`${post.image.url}`} />
+        <meta name="twitter:card" content="summary_large_image"/>
       </Head>
       <header className='container mx-auto px-2 py-8 md:py-12 lg:px-32 text-center grid place-items-center'>
         <FormattedDate date={post.createdAt}/>
