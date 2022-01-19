@@ -15,7 +15,7 @@ export default function Home({featuredPost}) {
       setRecentPosts(recentPosts)
     }
     fetchRecentPosts()
-  })
+  }, [])
 
   return (
     <>
