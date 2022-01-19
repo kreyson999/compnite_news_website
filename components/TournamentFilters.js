@@ -26,7 +26,7 @@ const TournamentFilters = ({dispatch, state, filteredTournamentsLength}) => {
 
   return (
     <>
-      <form className={`fixed top-0 bottom-0 left-0 right-0 bg-white z-50 overflow-y-auto md:static ${areFiltersClosed ? 'hidden md:block' : null}`}>
+      <form className={`fixed top-0 bottom-0 left-0 right-0 bg-white z-50 overflow-y-auto md:static ${areFiltersClosed && 'hidden md:block'}`}>
         <div className='grid grid-cols-6 md:hidden'>
           <button onClick={handleClickOnFilters} className='bg-green-900 grid place-content-center p-2'>
             <Image

@@ -5,7 +5,7 @@ export default function Custom404() {
   return (
   <>
     <Head>
-      <title>COMPNITE.PL - Błąd 500</title>
+      <title>KJMM.PL - Błąd 500</title>
     </Head>
     <div className="grid place-content-center h-full mt-24">
       <div className="flex flex-col items-center">

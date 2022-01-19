@@ -161,7 +161,7 @@ export default function TournamentPage({tournament}) {
   return (
     <>
       <Head>
-        <title>COMPNITE.PL - Fortnite Competitive</title>
+        <title>{`${tournament.name}`} | KJMM.PL</title>
         <meta name="description" content={`${tournament.name} to turniej rozgrywany w trybie ${tournament.mode} przeznaczony dla graczy z rangi ${tournament.requiredArenaRank}. Kliknij, aby dowiedzieć się więcej!`}/>
         
         <meta property="og:type" content="article" />

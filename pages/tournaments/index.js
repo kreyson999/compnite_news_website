@@ -5,7 +5,7 @@ export default function TournametsPage() {
   return (
     <>
       <Head>
-        <title>COMPNITE.PL - Turnieje</title>
+        <title>KJMM.PL - Turnieje</title>
         <meta name="description" content={`Wszystkie turnieje Fortnite w jednym miejscu. Klknij, aby zobaczyć!`}/>
 
         <meta property="og:type" content="website" />

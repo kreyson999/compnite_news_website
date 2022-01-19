@@ -16,7 +16,7 @@ const Sidebar = ({category, postSlug}) => {
     }
   }, [category,postSlug])
 
-  const RecommendedFromCategory = category ? (
+  const RecommendedFromCategory = category && (
     <>
       <SectionTitle text={`Więcej z ${category}`} border/>
       <div className='space-y-2 mb-4'>
@@ -24,7 +24,7 @@ const Sidebar = ({category, postSlug}) => {
         {categoryPosts.length >= 1 ? categoryPosts.map(post => <PostCard row key={post.title} post={post}/>) : <h4 className="col-span-5 md:my-2 md:my-8 text-red-600 font-semibold mx-auto">Wystąpił problem przy pobieraniu z bazy danych lub nie ma jeszcze postów w tej kategorii. Przepraszamy!</h4>}
       </div>
     </>
-  ) : null
+  )
 
   return (
     <aside className='col-span-1 md:col-span-4'>

@@ -89,7 +89,7 @@ export const getAllTournaments = async () => {
 export const getPostsByCategory = async (category, slug, quantity = 3) => {
   const query = gql`
     query GetPostsByCategory($category: String!, $slug: String!, $quantity: Int!) {
-      posts(where: {category: {name: $category}, slug_not: $slug}, first: $quantity) {
+      posts(orderBy: createdAt_DESC, where: {category: {name: $category}, slug_not: $slug}, first: $quantity) {
         createdAt
         excerpt
         image {

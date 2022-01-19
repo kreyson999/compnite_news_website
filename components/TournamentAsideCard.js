@@ -4,7 +4,7 @@ import moment from "moment";
 const TournamentAsideCard = ({tournament, active}) => {
   return (
     <a href={`/tournaments/${tournament.slug}`} className="relative bg-green-100 rounded px-2 flex items-center space-x-2 cursor-pointer border-r-4 hover:border-green-900">
-      {active ? <div className='absolute -top-1 -right-2 bg-red-600 w-3 h-3 rounded-full'></div> : null} 
+      {active && <div className='absolute -top-1 -right-2 bg-red-600 w-3 h-3 rounded-full'></div>} 
       <Image
       src={'/assets/icons/fortnite_star.png'}
       alt={tournament.name}

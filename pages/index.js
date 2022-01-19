@@ -20,7 +20,7 @@ export default function Home({featuredPost}) {
   return (
     <>
       <Head>
-        <title>COMPNITE.PL - Fortnite Competitive</title>
+        <title>KJMM.PL - Fortnite Competitive</title>
         <meta name="description" content={`Najlepsze miejsce dla profesjonalnych graczy Fortnite i nie tylko. Przeczytasz tutaj ciekawe e-sportowe artykuły oraz dowiesz się o najnowszych turniejach Fortnite!`}/>
         
         <meta property="og:type" content="website" />

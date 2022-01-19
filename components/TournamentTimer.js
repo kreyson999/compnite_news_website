@@ -34,10 +34,10 @@ const TournamentTimer = ({time, full}) => {
   } else {
     return (
       <>
-        {closestDateFormatted.days === 0 ? null : (<TimeUnitBox unit={'Dni'} data={closestDateFormatted.days}/>)}
+        {closestDateFormatted.days !== 0 && (<TimeUnitBox unit={'Dni'} data={closestDateFormatted.days}/>)}
         <TimeUnitBox unit={'Godziny'} data={closestDateFormatted.hours}/>
         <TimeUnitBox unit={'Minuty'} data={closestDateFormatted.minutes}/>
-        {closestDateFormatted.days !== 0 ? null : (<TimeUnitBox unit={'Sekundy'} data={closestDateFormatted.seconds}/>)}
+        {closestDateFormatted.days === 0 && (<TimeUnitBox unit={'Sekundy'} data={closestDateFormatted.seconds}/>)}
       </>
     );
   }

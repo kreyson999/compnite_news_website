@@ -5,11 +5,11 @@ const PointComponent = ({position, date, isOnlyOne, active}) => {
   return (
     <div className="flex flex-col items-center">
       <div className="flex items-center">
-        {isOnlyOne ? null : <div className={`h-2 w-16 ${position === 'start' ? 'bg-transparent' : 'bg-green-100'}`}></div>}
+        {!isOnlyOne && <div className={`h-2 w-16 ${position === 'start' ? 'bg-transparent' : 'bg-green-100'}`}></div>}
         <div className={`w-6 h-6 rounded-full ${active ? 'bg-green-900' : 'bg-green-100 border-4 border-white' }`}></div>
-        {isOnlyOne ? null : <div className={`h-2 w-16 ${position === 'end' ? 'bg-transparent' : 'bg-green-100'} ${position === 'end-more' ? 'bg-gradient-to-r from-green-100 to-white' : null}`}></div>}
+        {!isOnlyOne && <div className={`h-2 w-16 ${position === 'end' ? 'bg-transparent' : 'bg-green-100'} ${position === 'end-more' && 'bg-gradient-to-r from-green-100 to-white'}`}></div>}
       </div>
-      <span className={`${active ? 'font-semibold' : null} mt-2 text-gray-600`}>{moment(date).format('HH:mm, DD.MM')}</span>
+      <span className={`${active && 'font-semibold'} mt-2 text-gray-600`}>{moment(date).format('HH:mm, DD.MM')}</span>
     </div>
   )
 }

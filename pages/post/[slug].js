@@ -13,7 +13,7 @@ export default function PostPage({post}) {
   return (
     <>
       <Head>
-        <title>{post.title}</title>
+        <title>{post.title} | KJMM.PL</title>
         <link
           rel="canonical"
           href={`https://kjmm.pl/post/${post.slug}`}
