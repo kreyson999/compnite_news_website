@@ -1,3 +1,15 @@
+### Blog Website where you can read news about Fortnite Competitive and check upcoming tournaments.
+
+## This website is live on [`www.kjmm.pl`](https://www.kjmm.pl/).
+
+## Technologies used in this project:
+- React
+- NextJS
+- GraphCMS
+
+## TODO:
+- another page where you can see player statistics in Fortnite
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
