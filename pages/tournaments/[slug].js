@@ -7,6 +7,7 @@ import { ChipText, Loader, TournamentsTimeline } from "../../components";
 import { useState, useEffect } from "react";
 import { TournamentTimer } from "../../components";
 import getClosestDate from "../../helpers/getClosestDate";
+import Link from "next/link";
 
 
 const TournamentMainSection = ({tournament}) => {
@@ -63,7 +64,17 @@ const TournamentMainSection = ({tournament}) => {
 
   return (
     <>
-      <h2 className="text-2xl uppercase font-semibold text-center">{tournament.name}</h2>
+      <Link href={'/tournaments/'}>
+        <a className="hidden absolute left-6 top-6 bg-green-100 md:grid place-content-center p-1 rounded">
+          <Image 
+          src={'/assets/icons/arrow_back.svg'} 
+          alt="Go to Tournaments" 
+          width={32} 
+          height={32}
+          />
+        </a>
+      </Link>
+      <h1 className="text-2xl uppercase font-semibold text-center">{tournament.name}</h1>
 
       <TournamentsTimeline tournamentDates={tournament.date} closestDate={closestDate}/>
 
@@ -80,7 +91,7 @@ const TournamentMainSection = ({tournament}) => {
         </div>
         <div className="md:col-span-5 flex items-start justify-between flex-col space-y-4 md:space-y-12">
           <div className="space-y-1">
-            <h3 className="font-semibold text-2xl md:text-3xl">{tournament.name.toUpperCase()}</h3>
+            <h2 className="font-semibold text-2xl md:text-3xl">{tournament.name.toUpperCase()}</h2>
             <ChipText text={tournament.mode.toUpperCase()}/>
             <p className="text-gray-600 hidden md:block">{tournament.description}</p>
             <div className="flex flex-col items-start">
@@ -95,12 +106,12 @@ const TournamentMainSection = ({tournament}) => {
           <div className="w-full md:w-fit">
             {isEnded ? (
               <>
-                <h5 className='text-lg text-center'>Zwyciezca:</h5>
+                <h3 className='text-lg text-center'>Zwyciezca:</h3>
                 <div className='mt-2 py-2 px-4 text-center bg-green-600 rounded text-lg font-semibold text-white select-none '>{tournament.winner ?? 'TDA'}</div>
               </>
             ) : (
               <>
-              <h4 className="uppercase text-center font-semibold text-xl">Startuje za:</h4>
+              <h3 className="uppercase text-center font-semibold text-xl">Startuje za:</h3>
               <div className='mt-2 text-center gap-2 grid grid-cols-4 select-none'>
                 <TournamentTimer time={closestDate} full/>
               </div>
@@ -175,7 +186,7 @@ export default function TournamentPage({tournament}) {
         <meta name="twitter:description" content={`${tournament.name} to turniej rozgrywany w trybie ${tournament.mode} przeznaczony dla graczy z rangi ${tournament.requiredArenaRank}. Kliknij, aby dowiedzieć się więcej!`} />
         <meta name="twitter:image" content={`${tournament.image.url}`} />
       </Head>
-      <div className="my-8 md:my-16 container mx-auto bg-white h-full rounded shadow-lg py-6 px-4 md:px-6 lg:px-12 xl:px-36 space-y-8">
+      <div className="relative my-8 md:my-16 container mx-auto bg-white h-full rounded shadow-lg py-6 px-4 md:px-6 lg:px-12 xl:px-36 space-y-8">
         <TournamentMainSection tournament={tournament}/>
       </div>
     </>

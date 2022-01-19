@@ -34,7 +34,7 @@ const Footer = () => {
       <div className="col-span-1 md:col-span-5 bg-green-100 px-2 py-4 md:py-8">
         <a target={"_blank"} href={"https://mlynek.xyz"} className="md:hidden font-semibold text-lg flex justify-center space-x-2 cursor-pointer" rel="noreferrer">
           <span>Strony Internetowe</span>
-          <span className='text-green-900'>MLYNEK.XYZ</span>
+          <span>MLYNEK.XYZ</span>
         </a>
       </div>
       <div className="hidden md:block md:absolute md:w-full md:h-full">
@@ -69,7 +69,7 @@ const Footer = () => {
             </a>
           </div>
           <a target={"_blank"} href={"https://mlynek.xyz"} className="block font-semibold text-lg" rel="noreferrer">
-            Strony Internetowe <span className='text-green-900'>MLYNEK.XYZ</span>
+            Strony Internetowe MLYNEK.XYZ
           </a>
         </div>
       </div>

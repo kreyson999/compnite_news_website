@@ -15,7 +15,7 @@ const TournamentCard = ({tournament, ended, withoutTimer}) => {
         />
       </div>
       <div className='px-2 py-2 flex flex-col justify-end'>
-        <h5 className='uppercase font-semibold text-xl cursor-pointer'>{tournament.name}</h5>
+        <h3 className='uppercase font-semibold text-xl cursor-pointer'>{tournament.name}</h3>
         <div className='flex flex-wrap py-1 gap-2'>
           {tournament.mode && <ChipText text={tournament.mode.toUpperCase()}/>}
           <ChipText text={tournament.tournamentSource} />
@@ -26,7 +26,7 @@ const TournamentCard = ({tournament, ended, withoutTimer}) => {
         {withoutTimer ? null : ended ? 
         // ended
         (<div className='mt-2 flex flex-col justify-evenly text-center space-y-2 border-t-2 border-gray-600 pt-4 mt-4'>
-          <h5 className='text-lg'>Zwyciezca:</h5>
+          <h4 className='text-lg'>Zwyciezca:</h4>
           <div className='p-2 bg-green-600 rounded text-lg font-semibold text-white'>{tournament.winner ?? 'TDA'}</div>
         </div>) :
         (<div className='mt-2 flex justify-evenly text-center space-x-2 border-t-2 border-gray-600 pt-4 mt-4'>

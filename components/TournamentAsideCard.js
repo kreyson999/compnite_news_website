@@ -12,7 +12,7 @@ const TournamentAsideCard = ({tournament, active}) => {
       height={64}
       />
       <div>
-        <h5 className="font-semibold text-lg cursor-pointer">{tournament.name.toUpperCase()}</h5>
+        <h3 className="font-semibold text-lg cursor-pointer">{tournament.name.toUpperCase()}</h3>
         <p className="cursor-pointer">{moment(tournament.date).format('HH:mm, DD MMMM')}</p>
       </div>
     </a>

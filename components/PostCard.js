@@ -17,7 +17,7 @@ const PostCard = ({row, post, small}) => {
           />
           <div>
             {small ? null : <FormattedDate date={post.createdAt} />}
-            <h4 className={`line-clamp-4 lg:line-clamp-3 xl:line-clamp-4 font-semibold cursor-pointer ${row || small ? 'text-lg lg:text-normal' : 'text-lg'}`}>{post.title}</h4>
+            <h3 className={`line-clamp-4 lg:line-clamp-3 xl:line-clamp-4 font-semibold cursor-pointer ${row || small ? 'text-lg lg:text-normal' : 'text-lg'}`}>{post.title}</h3>
             {row || small ? null : <CategoryBox category={post.category.name}/>}
           </div>
         </div>
