@@ -10,7 +10,7 @@ const TournamentCard = ({tournament, ended, withoutTimer}) => {
         <Image
           src={tournament.image.url}
           alt={tournament.name}
-          objectFit='cover'
+          className='object-cover'
           layout='fill'
         />
       </div>

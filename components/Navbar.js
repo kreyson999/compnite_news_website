@@ -29,7 +29,7 @@ const Navbar = () => {
       <div className="container py-3 mx-auto flex justify-center md:justify-between items-center" >
         <div className="px-2 text-3xl font-bold uppercase text-green-900 cursor-pointer">
             <Link passHref href={'/'}>
-            <h2 className="cursor-pointer">Kjmm</h2>
+              <a className="cursor-pointer">KJMM.PL</a>
             </Link>
         </div>
         <div className="hidden md:block mx-2 bg-green-100 cursor-pointer px-1 py-1 rounded grid place-content-center md:hidden">

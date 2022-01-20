@@ -12,7 +12,7 @@ const PostCard = ({row, post, small}) => {
           src={post.image.url}
           width={row ? 320 : 640}
           height={row ? 180 : 360}
-          className='rounded'
+          className='rounded object-cover'
           alt={`${post.title}`}
           />
           <div>
