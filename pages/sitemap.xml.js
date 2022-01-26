@@ -11,7 +11,10 @@ export const getServerSideProps = async ({ res }) => {
   }[process.env.NODE_ENV];
 
   const staticPages = fs
-    .readdirSync("pages")
+    .readdirSync({
+      development: "pages",
+      production: "./",
+    }[process.env.NODE_ENV])
     .filter((staticPage) => {
       return ![
         "_app.js",
