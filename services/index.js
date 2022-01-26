@@ -5,6 +5,7 @@ import { request, gql } from "graphql-request";
 // GRAPHCMS
 // ####################
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT;
+export const REVALIDATE_PAGE_TIME = 60 * 30
 
 export const getFeaturedPost = async () => {
   const query = gql`

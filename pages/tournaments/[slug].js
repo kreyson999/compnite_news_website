@@ -1,4 +1,4 @@
-import { getTournamentUrls, getTournamentDetails } from "../../services";
+import { getTournamentUrls, getTournamentDetails, REVALIDATE_PAGE_TIME } from "../../services";
 import { useRouter } from 'next/router'
 import Head from "next/head";
 import moment from "moment";
@@ -164,10 +164,6 @@ const TournamentMainSection = ({tournament}) => {
 }
 
 export default function TournamentPage({tournament}) {
-  const router = useRouter()
-  if (router.isFallback) {
-    return <Loader/>
-  }
 
   return (
     <>
@@ -199,7 +195,8 @@ export default function TournamentPage({tournament}) {
 export async function getStaticProps({ params }) { 
   const data = await getTournamentDetails(params.slug)
   return {
-     props: { tournament: data }
+     props: { tournament: data },
+     revalidate: REVALIDATE_PAGE_TIME
   }
 }
 
@@ -208,6 +205,6 @@ export async function getStaticPaths() {
 
   return {
     paths: urls.map(({ node: {slug}}) => ({params: { slug }})),
-    fallback: true,
+    fallback: 'blocking',
   }
 }

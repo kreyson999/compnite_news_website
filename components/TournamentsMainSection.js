@@ -36,7 +36,7 @@ function filter(state, action) {
   }
 }
 
-const TournamentsMainSection = () => {
+const TournamentsMainSection = ({fetchedTournaments}) => {
   const [endedTournaments, setEndedTournaments] = useState([])
   const [upcomingTournaments, setUpcomingTournaments] = useState([])
   const [filteredTournaments, setFilteredTournaments] = useState([])
@@ -45,7 +45,6 @@ const TournamentsMainSection = () => {
 
   useEffect(() => {
     const fetchTournaments = async () => {
-      const fetchedTournaments = await getAllTournaments();
       
       const formatTournaments = (tournaments) => {
         const upcomingTournaments = []
@@ -69,7 +68,7 @@ const TournamentsMainSection = () => {
       formatTournaments(fetchedTournaments)
     }
     fetchTournaments();
-  }, [])
+  }, [fetchedTournaments])
 
   useEffect(() => {
     const filterTournaments = () => {

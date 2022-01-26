@@ -36,12 +36,16 @@ const PostContent = ({content}) => {
         }
 
         switch (obj.type) {
+          case 'heading-two':
+            return <h2 key={index} className="text-2xl font-semibold border-b-2 pb-4">{checkTextChildren(obj)}</h2>;
           case 'heading-three':
-            return <h2 key={index} className="text-2xl font-semibold mb-8 border-b-2 pb-6">{checkTextChildren(obj)}</h2>;
+            return <h3 key={index} className="text-2xl font-semibold">{checkTextChildren(obj)}</h3>;
+          case 'heading-four':
+            return <h4 key={index} className="text-xl font-semibold">{checkTextChildren(obj)}</h4>;
           case 'paragraph':
             return <p key={index} className="mb-8 text-lg">{checkTextChildren(obj)}</p>;
-          case 'heading-four':
-            return <h3 key={index} className="text-xl font-semibold mb-2">{checkTextChildren(obj)}</h3>;
+          case 'block-quote':
+            return (<blockquote key={index} className="italic border-green-900 border-l-4 p-4 text-lg">{checkTextChildren(obj)}</blockquote>);
           case 'image':
             return (
               <div key={index} className="w-full flex justify-center my-8">
@@ -128,7 +132,7 @@ const PostContent = ({content}) => {
   }, [content.raw.children])
 
   return (
-    <div>
+    <div className="space-y-6">
       {formattedContent}
     </div>
   );

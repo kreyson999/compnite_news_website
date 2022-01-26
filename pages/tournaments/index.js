@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import { TournamentsMainSection } from '../../components';
+import { getAllTournaments, REVALIDATE_PAGE_TIME } from '../../services';
 
-export default function TournametsPage() {
+export default function TournametsPage({fetchedTournaments}) {
   return (
     <>
       <Head>
@@ -29,7 +30,7 @@ export default function TournametsPage() {
       <div className="bg-white w-full py-6 md:py-12">
         <div className="container mx-auto px-2">
           <div className='grid grid-cols-1 gap-y-8 md:gap-x-16 md:gap-y-8 md:grid-cols-12'>
-            <TournamentsMainSection/>
+            <TournamentsMainSection fetchedTournaments={fetchedTournaments}/>
           </div>
         </div>
       </div>
@@ -37,3 +38,13 @@ export default function TournametsPage() {
   );
 }
 
+export async function getStaticProps() {
+  const fetchedTournaments = await getAllTournaments()
+  
+  return {
+    props: {
+      fetchedTournaments
+    },
+    revalidate: REVALIDATE_PAGE_TIME
+  }
+}

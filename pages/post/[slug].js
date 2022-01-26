@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Head from "next/head"
 import { FormattedDate, CategoryBox, Sidebar, PostContent, HomeCategory, Loader } from "../../components";
-import { getPostDetails, getPostUrls } from "../../services";
+import { getPostDetails, getPostUrls, REVALIDATE_PAGE_TIME } from "../../services";
 import { useRouter } from 'next/router'
 
 export default function PostPage({post}) {
@@ -67,7 +67,8 @@ export default function PostPage({post}) {
 export async function getStaticProps({ params }) { 
   const data = await getPostDetails(params.slug)
   return {
-     props: { post: data }
+     props: { post: data },
+     revalidate: REVALIDATE_PAGE_TIME
   }
 }
 
@@ -76,6 +77,6 @@ export async function getStaticPaths() {
 
   return {
     paths: urls.map(({ node: {slug}}) => ({params: { slug }})),
-    fallback: true,
+    fallback: 'blocking',
   }
 }

@@ -3,19 +3,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { FormattedDate, HomeCategory, Loader, PostCard, SectionTitle, Sidebar } from '../components'
-import { getFeaturedPost, getRecentPosts } from '../services'
+import { getFeaturedPost, getRecentPosts, REVALIDATE_PAGE_TIME } from '../services'
 
-export default function Home({featuredPost}) {
-
-  const [recentPosts, setRecentPosts] = useState([])
-
-  useEffect(() => {
-    const fetchRecentPosts = async () => {
-      const recentPosts = await getRecentPosts();
-      setRecentPosts(recentPosts)
-    }
-    fetchRecentPosts()
-  }, [])
+export default function Home({featuredPost, recentPosts}) {
 
   return (
     <>
@@ -90,9 +80,12 @@ export default function Home({featuredPost}) {
 
 export async function getStaticProps() {
   const featuredPosts = await getFeaturedPost();
+  const recentPosts = await getRecentPosts();
   return {
     props: {
       featuredPost: featuredPosts[0],
-    }
+      recentPosts: recentPosts
+    },
+    revalidate: REVALIDATE_PAGE_TIME
   }
 }
