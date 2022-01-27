@@ -80,7 +80,7 @@ export default function Home({featuredPost, recentPosts}) {
 
 export async function getStaticProps() {
   const featuredPosts = await getFeaturedPost();
-  const recentPosts = await getRecentPosts();
+  const recentPosts = (await getRecentPosts()) || [];
   return {
     props: {
       featuredPost: featuredPosts[0],

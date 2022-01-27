@@ -17,6 +17,15 @@ export const getServerSideProps = async ({ res }) => {
     }[process.env.NODE_ENV])
     .filter((staticPage) => {
       return ![
+        ".next",
+        "___next_launcher.js",
+        "___vc_bridge.js",
+        "components",
+        "helpers",
+        "node_modules",
+        "package.json",
+        "services",
+        "styles",
         "_app.js",
         "_document.js",
         "_error.js",

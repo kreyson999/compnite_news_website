@@ -60,7 +60,7 @@ const PostContent = ({content}) => {
             );
           case 'bulleted-list':
             return (
-              <ul className="text-lg my-8 list-disc list-inside ml-4 md:ml-8" key={index}>
+              <ul className="text-lg my-8 list-disc list-inside ml-4 md:ml-8 space-y-1.5" key={index}>
                 {obj.children.map(item => {
                   return item.children.map(item2 => {
                     return item2.children.map(item3 => {
@@ -72,7 +72,7 @@ const PostContent = ({content}) => {
             );
           case 'numbered-list':
             return (
-              <ol className="text-lg my-8 list-decimal list-inside ml-4 md:ml-8" key={index}>
+              <ol className="text-lg my-8 list-decimal list-inside ml-4 md:ml-8 space-y-1.5" key={index}>
                 {obj.children.map(item => {
                   return item.children.map(item2 => {
                     return item2.children.map(item3 => {
