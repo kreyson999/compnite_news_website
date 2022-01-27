@@ -37,7 +37,7 @@ const PostContent = ({content}) => {
 
         switch (obj.type) {
           case 'heading-two':
-            return <h2 key={index} className="text-2xl font-semibold border-b-2 pb-4">{checkTextChildren(obj)}</h2>;
+            return <h2 key={index} className="text-xl font-semibold border-b-2 pb-4">{checkTextChildren(obj)}</h2>;
           case 'heading-three':
             return <h3 key={index} className="text-2xl font-semibold">{checkTextChildren(obj)}</h3>;
           case 'heading-four':

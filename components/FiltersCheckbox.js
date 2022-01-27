@@ -1,15 +1,16 @@
 import Image from "next/image";
 
-const FiltersCheckbox = ({name, value, onChange}) => {
+const FiltersCheckbox = ({name, value, onChange, id}) => {
   return (
     <>
       <input 
       className="checkbox-input" 
-      id={name} onChange={() => onChange({type: 'change', name: name})} 
+      id={id}
+      onChange={() => onChange({type: 'change', name: name})} 
       type="checkbox" 
       checked={value} 
       />
-      <label className="checkbox" htmlFor={name}>
+      <label className="checkbox" htmlFor={id}>
         <span>
           
         </span>

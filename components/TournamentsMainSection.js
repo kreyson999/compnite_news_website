@@ -1,214 +1,145 @@
 import { Loader, SectionTitle, TournamentCard } from '.';
-import { useEffect, useReducer, useState } from 'react';
-import { getAllTournaments } from '../services';
-import moment from 'moment';
+import { useEffect, useReducer} from 'react';
 import filtersEnum from '../helpers/filtersEnum'
 import TournamentFilters from './TournamentFilters';
 import getClosestDate from '../helpers/getClosestDate';
 
-const initialFilters = {
-  [filtersEnum.solo]: false,
-  [filtersEnum.duo]: false,
-  [filtersEnum.trio]: false,
-  [filtersEnum.squad]: false,
-  [filtersEnum.fortnite]: false,
-  [filtersEnum.other]: false,
-  [filtersEnum.rematch]: false,
-  [filtersEnum.warlegend]: false,
-  [filtersEnum.qualifications]: false,
-  [filtersEnum.money]: false,
-  [filtersEnum.hype]: false,
-  [filtersEnum.skin]: false,
-  [filtersEnum.open]: false,
-  [filtersEnum.contender]: false,
-  [filtersEnum.champion]: false,
-  [filtersEnum.pro]: false,
-}
 
-function filter(state, action) {
+
+function tournamentsReducer(state, action) {
   switch (action.type) {
-    case 'change':
-      return {...state, [action.name]: !state[action.name] }
-    case 'clear': 
-      return initialFilters
+    case 'init':
+      const allTournaments = [...state.allTournaments]
+      const upcomingTournaments = allTournaments.filter(tournament => {
+        const now = new Date().getTime()
+        const lastTournamentDate = new Date(tournament.date[tournament.date.length-1]).getTime()
+        if (now < lastTournamentDate) {
+          return true
+        }
+      }).map((tournament2) => {
+          const date = getClosestDate(tournament2.date)
+          const tournamentObj = {...tournament2}
+          tournamentObj.date = date
+          return tournamentObj
+      }).sort((a,b) => {
+        return new Date(a.date) - new Date(b.date)
+      })
+
+      const endedTournaments = allTournaments.filter(tournament => {
+        const now = new Date().getTime()
+        const lastTournamentDate = new Date(tournament.date[tournament.date.length-1]).getTime()
+        if (now > lastTournamentDate) {
+          return true
+        }
+      }).sort((a,b) => {
+        return new Date(b.date[b.date.length-1]) - new Date(a.date[a.date.length-1])
+      })
+      
+      return {
+        ...state,
+        allTournaments: state.allTournaments, 
+        upcomingTournaments: upcomingTournaments,
+        endedTournaments: endedTournaments,
+        filteredTournaments: upcomingTournaments,
+      }
+    case 'filter':
+      const filteredTournaments = state.upcomingTournaments.filter(tournament => {
+        if (action.filterType === 'mode') {
+          if ((tournament.mode === action.filter) || action.filter === 'all') {
+            if ((tournament.requiredArenaRank === state.currentFilters.rank) || state.currentFilters.rank === 'all') {
+              if ((tournament.tournamentSource === state.currentFilters.platform) || state.currentFilters.platform === 'all') {
+                if ((tournament.prizeType === state.currentFilters.reward) || state.currentFilters.reward === 'all') {
+                  return true
+                }
+              }
+            }
+          }
+        }
+        if (action.filterType === 'rank') {
+          if ((tournament.requiredArenaRank === action.filter) || action.filter === 'all') {
+            if ((tournament.mode === state.currentFilters.mode) || state.currentFilters.mode === 'all') {
+              if ((tournament.tournamentSource === state.currentFilters.platform) || state.currentFilters.platform === 'all') {
+                if ((tournament.prizeType === state.currentFilters.reward) || state.currentFilters.reward === 'all') {
+                  return true
+                }
+              }
+            }
+          }
+        }
+        if (action.filterType === 'platform') {
+          if ((tournament.tournamentSource === action.filter) || action.filter === 'all') {
+            if ((tournament.mode === state.currentFilters.mode) || state.currentFilters.mode === 'all') {
+              if ((tournament.requiredArenaRank === state.currentFilters.rank) || state.currentFilters.rank === 'all') {
+                if ((tournament.prizeType === state.currentFilters.reward) || state.currentFilters.reward === 'all') {
+                  return true
+                }
+              }
+            }
+          }
+        }
+        if (action.filterType === 'reward') {
+          if ((tournament.prizeType === action.filter) || action.filter === 'all') {
+            if ((tournament.mode === state.currentFilters.mode) || state.currentFilters.mode === 'all') {
+              if ((tournament.requiredArenaRank === state.currentFilters.rank) || state.currentFilters.rank === 'all') {
+                if ((tournament.tournamentSource === state.currentFilters.platform) || state.currentFilters.platform === 'all') {
+                  return true
+                }
+              }
+            }
+          }
+        }
+      })
+
+      return {
+        ...state, 
+        filteredTournaments: filteredTournaments, 
+        currentFilters: {...state.currentFilters, [action.filterType]:action.filter}
+      }
+    case 'clearFilters':
+      return {
+        ...state, 
+        filteredTournaments: [...state.upcomingTournaments],
+        currentFilters: {mode: 'all', rank: 'all', platform: 'all', reward: 'all'}
+      }
+
     default:
       throw new Error('Something went wrong')
   }
 }
 
 const TournamentsMainSection = ({fetchedTournaments}) => {
-  const [endedTournaments, setEndedTournaments] = useState([])
-  const [upcomingTournaments, setUpcomingTournaments] = useState([])
-  const [filteredTournaments, setFilteredTournaments] = useState([])
-
-  const [state, dispatch] = useReducer(filter, initialFilters)
-
-  useEffect(() => {
-    const fetchTournaments = async () => {
-      
-      const formatTournaments = (tournaments) => {
-        const upcomingTournaments = []
-        const endedTournaments = []
-        const currentDate = moment()
-
-        // iterate through each tournament
-        tournaments.forEach(tournament => {
-          //check if the last date of the tournament is before current date
-          if (moment(tournament.date[tournament.date.length - 1]).isBefore(currentDate)) {
-            tournament.date = tournament.date[tournament.date.length - 1]
-            endedTournaments.push(tournament)
-          } else {
-            tournament.date = getClosestDate(tournament.date)
-            upcomingTournaments.push(tournament)
-          }
-        })
-        setUpcomingTournaments(upcomingTournaments)
-        setEndedTournaments(endedTournaments)
-      }
-      formatTournaments(fetchedTournaments)
-    }
-    fetchTournaments();
-  }, [fetchedTournaments])
+  const [state, dispatch] = useReducer(tournamentsReducer, 
+    {
+      allTournaments: fetchedTournaments, 
+      upcomingTournaments: [], 
+      endedTournaments: [], 
+      filteredTournaments: [],
+      currentFilters: {mode: 'all', rank: 'all', platform: 'all', reward: 'all'}
+    })
 
   useEffect(() => {
-    const filterTournaments = () => {
-      const turnedFilters = [];
-      const filteredTournaments = [];
-      for (const key in state) {
-        if (state[key]) {
-          turnedFilters.push(key)
-        } 
-      }
-      if (turnedFilters.length > 0) {
-        upcomingTournaments.forEach(tournament => {
-          let isValid = true
-          turnedFilters.forEach(filter => {
-            switch(filter) {
-              case filtersEnum.solo:
-                if (tournament.mode !== filtersEnum.solo.toLowerCase()) {
-                  isValid = false
-                }
-                break
-              case filtersEnum.duo:
-                if (tournament.mode !== filtersEnum.duo.toLowerCase()) {
-                  isValid = false
-                }
-                break
-              case filtersEnum.trio:
-                if (tournament.mode !== filtersEnum.trio.toLowerCase()) {
-                  isValid = false
-                }
-                break
-              case filtersEnum.squad:
-                if (tournament.mode !== filtersEnum.squad.toLowerCase()) {
-                  isValid = false
-                }
-                break
-              case filtersEnum.fortnite:
-                if (tournament.tournamentSource !== filtersEnum.fortnite) {
-                  isValid = false
-                }
-                break
-              case filtersEnum.warlegend:
-                if (tournament.tournamentSource !== filtersEnum.warlegend) {
-                  isValid = false
-                }
-                break
-              case filtersEnum.rematch:
-                if (tournament.tournamentSource !== filtersEnum.rematch) {
-                  isValid = false
-                }
-                break
-              case filtersEnum.other:
-                if (tournament.tournamentSource !== 'other') {
-                  isValid = false
-                }
-                break
-              case filtersEnum.money:
-                if (tournament.prizeType !== 'money') {
-                  isValid = false
-                }
-                break
-              case filtersEnum.hype:
-                if (tournament.prizeType !== 'hype') {
-                  isValid = false
-                }
-                break
-              case filtersEnum.skin:
-                if (tournament.prizeType !== 'skin') {
-                  isValid = false
-                }
-                break
-              case filtersEnum.qualifications:
-                if (tournament.linkToRegister !== null) {
-                  isValid = false
-                }
-                break
-              case filtersEnum.open:
-                if (tournament.requiredArenaRank !== filtersEnum.open) {
-                  isValid = false
-                }
-                break
-              case filtersEnum.open:
-                console.log(filtersEnum.open, tournament.requiredArenaRank)
-                if (tournament.requiredArenaRank !== filtersEnum.open.toLowerCase()) {
-                  isValid = false
-                }
-                break
-              case filtersEnum.contender:
-                if (tournament.requiredArenaRank !== filtersEnum.contender.toLowerCase()) {
-                  isValid = false
-                }
-                break
-              case filtersEnum.champion:
-                if (tournament.requiredArenaRank !== filtersEnum.champion.toLowerCase()) {
-                  isValid = false
-                }
-                break
-              case filtersEnum.pro:
-                if (tournament.requiredArenaRank !== filtersEnum.pro.toLowerCase()) {
-                  isValid = false
-                }
-                break
-            }
-          })
-          if (isValid) {
-            filteredTournaments.push(tournament)
-          }
-        })
-      } else {
-        upcomingTournaments.forEach(tournament => {
-          filteredTournaments.push(tournament)
-        })
-      }
-      setFilteredTournaments(filteredTournaments)
-    }
-    filterTournaments();
-  }, [state, upcomingTournaments])
+    dispatch({type: "init"})
+  }, [])
 
   return (
     <>
       <main className='col-span-1 md:col-span-8 space-y-8'>
         <SectionTitle text="Nadchodzące turnieje"/>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-          {filteredTournaments.length > 0 ? filteredTournaments.sort((a,b) => {
-            return new Date(a.date) - new Date(b.date)
-          }).map((tournament, index) => (<TournamentCard key={index} tournament={tournament}/>)) 
-          : <Loader colSpan={3}/>
-          
-          }
+          {state.filteredTournaments.map((tournament, index) => (
+            <TournamentCard key={index} tournament={tournament} />
+          ))}
         </div>
         <SectionTitle text="Zakończone turnieje"/>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-          {endedTournaments.length > 0 ? endedTournaments.sort((a,b) => {
-            return new Date(b.date) - new Date(a.date)
-          }).map((tournament, index) => (<TournamentCard key={index} tournament={tournament} ended={true}/>)) :
-          <Loader colSpan={3}/> }
+          {state.endedTournaments.map((tournament, index) => (
+            <TournamentCard key={index} tournament={tournament} ended={true} />
+          ))}
         </div>
       </main>
       <aside className='col-span-1 md:col-span-4'>
         <SectionTitle border text={"Filtruj"}/>
-        <TournamentFilters dispatch={dispatch} state={state} filteredTournamentsLength={filteredTournaments.length} />
+        <TournamentFilters dispatch={dispatch} currentFilters={state.currentFilters} length={state.filteredTournaments.length}/>
       </aside>
     </>
   );

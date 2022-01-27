@@ -3,7 +3,7 @@ import { FiltersCheckbox } from ".";
 import filtersEnum from "../helpers/filtersEnum";
 import { useState, useEffect } from 'react'
 
-const TournamentFilters = ({dispatch, state, filteredTournamentsLength}) => {
+const TournamentFilters = ({dispatch, currentFilters, length}) => {
 
   const [areFiltersClosed, setAreFiltersClosed] = useState(true)
 
@@ -14,7 +14,12 @@ const TournamentFilters = ({dispatch, state, filteredTournamentsLength}) => {
 
   const handleClearingFilters = (e) => {
     e.preventDefault();
-    dispatch({type: 'clear'})
+    dispatch({type: 'clearFilters'})
+  }
+
+  const handleChangingFilters = (filter, filterType) => {
+    console.log(filterType)
+    dispatch({type: 'filter', filter: filter, filterType: filterType})
   }
 
   useEffect(() => {
@@ -40,33 +45,39 @@ const TournamentFilters = ({dispatch, state, filteredTournamentsLength}) => {
         </div>
         <div className='flex flex-col p-2 md:p-0'>
           <p className='font-semibold'>Tryb:</p>
-          <FiltersCheckbox name={filtersEnum.solo} onChange={dispatch} value={state[filtersEnum.solo]}/>
-          <FiltersCheckbox name={filtersEnum.duo} onChange={dispatch} value={state[filtersEnum.duo]} />
-          <FiltersCheckbox name={filtersEnum.trio} onChange={dispatch} value={state[filtersEnum.trio]} />
-          <FiltersCheckbox name={filtersEnum.squad} onChange={dispatch} value={state[filtersEnum.squad]} />
-
+          <FiltersCheckbox id={"mode-all"} name="Wszystkie" value={currentFilters.mode === 'all'} onChange={() => handleChangingFilters('all', 'mode')}/>
+          <FiltersCheckbox id={"mode-solo"} name="Solo" value={currentFilters.mode === filtersEnum.mode.solo} onChange={() => handleChangingFilters(filtersEnum.mode.solo, 'mode')}/>
+          <FiltersCheckbox id={"mode-duo"} name="Duo" value={currentFilters.mode === filtersEnum.mode.duo} onChange={() => handleChangingFilters(filtersEnum.mode.duo, 'mode')}/>
+          <FiltersCheckbox id={"mode-trio"} name="Trio" value={currentFilters.mode === filtersEnum.mode.trio} onChange={() => handleChangingFilters(filtersEnum.mode.trio, 'mode')}/>
+          <FiltersCheckbox id={"mode-squad"} name="Squad" value={currentFilters.mode === filtersEnum.mode.squad} onChange={() => handleChangingFilters(filtersEnum.mode.squad, 'mode')}/>
+          
           <p className='font-semibold'>Ranga turnieju:</p>
-          <FiltersCheckbox name={filtersEnum.open} onChange={dispatch} value={state[filtersEnum.open]}/>
-          <FiltersCheckbox name={filtersEnum.contender} onChange={dispatch} value={state[filtersEnum.contender]}/>
-          <FiltersCheckbox name={filtersEnum.champion} onChange={dispatch} value={state[filtersEnum.champion]}/>
-          <FiltersCheckbox name={filtersEnum.pro} onChange={dispatch} value={state[filtersEnum.pro]}/>
-
+          <FiltersCheckbox 
+          id={"rank-all"}
+          name="Wszystkie" 
+          value={currentFilters.rank === 'all'} 
+          onChange={() => handleChangingFilters('all', 'rank')}/>
+          <FiltersCheckbox id={"rank-open"} name="Open" value={currentFilters.rank === filtersEnum.rank.open} onChange={() => handleChangingFilters(filtersEnum.rank.open, 'rank')}/>
+          <FiltersCheckbox id={"rank-contender"} name="Contender" value={currentFilters.rank === filtersEnum.rank.contender} onChange={() => handleChangingFilters(filtersEnum.rank.contender, 'rank')}/>
+          <FiltersCheckbox id={"rank-champion"} name="Champion" value={currentFilters.rank === filtersEnum.rank.champion} onChange={() => handleChangingFilters(filtersEnum.rank.champion, 'rank')}/>
+          <FiltersCheckbox id={"rank-pro"} name="Pro" value={currentFilters.rank === filtersEnum.rank.pro} onChange={() => handleChangingFilters(filtersEnum.rank.pro, 'rank')}/>
+          
           <p className='font-semibold'>Organizator:</p>
-          <FiltersCheckbox name={filtersEnum.fortnite} onChange={dispatch} value={state[filtersEnum.fortnite]}/>
-          <FiltersCheckbox name={filtersEnum.rematch} onChange={dispatch} value={state[filtersEnum.rematch]}/>
-          <FiltersCheckbox name={filtersEnum.warlegend} onChange={dispatch} value={state[filtersEnum.warlegend]}/>
-          <FiltersCheckbox name={filtersEnum.other} onChange={dispatch} value={state[filtersEnum.other]}/>
+          <FiltersCheckbox id={"platform-all"} name="Wszystkie" value={currentFilters.platform === 'all'} onChange={() => handleChangingFilters('all', 'platform')}/>
+          <FiltersCheckbox id={"platform-fortnite"} name="Fortnite" value={currentFilters.platform === filtersEnum.platform.fortnite} onChange={() => handleChangingFilters(filtersEnum.platform.fortnite, 'platform')}/>
+          <FiltersCheckbox id={"platform-rematch"} name="Rematch" value={currentFilters.platform === filtersEnum.platform.rematch} onChange={() => handleChangingFilters(filtersEnum.platform.rematch, 'platform')}/>
+          <FiltersCheckbox id={"platform-warlegend"} name="Warlegend" value={currentFilters.platform === filtersEnum.platform.warlegend} onChange={() => handleChangingFilters(filtersEnum.platform.warlegend, 'platform')}/>
+          
+          <p className='font-semibold'>Nagroda:</p>
+          <FiltersCheckbox id={"reward-all"} name="Wszystkie" value={currentFilters.reward === 'all'} onChange={() => handleChangingFilters('all', 'reward')}/>
+          <FiltersCheckbox id={"reward-money"} name="Pieniądze" value={currentFilters.reward === filtersEnum.rewardType.money} onChange={() => handleChangingFilters(filtersEnum.rewardType.money, 'reward')}/>
+          <FiltersCheckbox id={"reward-hype"} name="Punkty Hype" value={currentFilters.reward === filtersEnum.rewardType.hype} onChange={() => handleChangingFilters(filtersEnum.rewardType.hype, 'reward')}/>
+          <FiltersCheckbox id={"reward-skin"} name="Skin" value={currentFilters.reward === filtersEnum.rewardType.skin} onChange={() => handleChangingFilters(filtersEnum.rewardType.skin, 'reward')}/>
 
-          <p className='font-semibold'>Typ nagrody:</p>
-          <FiltersCheckbox name={filtersEnum.money} onChange={dispatch} value={state[filtersEnum.money]}/> 
-          <FiltersCheckbox name={filtersEnum.hype} onChange={dispatch} value={state[filtersEnum.hype]}/> 
-          <FiltersCheckbox name={filtersEnum.skin} onChange={dispatch} value={state[filtersEnum.skin]}/> 
 
-          <p className='font-semibold'>Inne:</p>
-          <FiltersCheckbox name={filtersEnum.qualifications} onChange={dispatch} value={state[filtersEnum.qualifications]}/>
         </div>
         <div className='p-2'>
-          <button onClick={handleClickOnFilters} className='md:hidden text-center w-full bg-green-900 text-lg mt-2 py-2 text-white rounded'>Pokaż wyniki ({filteredTournamentsLength})</button>
+          <button onClick={handleClickOnFilters} className='md:hidden text-center w-full bg-green-900 text-lg mt-2 py-2 text-white rounded'>Pokaż wyniki ({length})</button>
         </div>
         <button onClick={handleClearingFilters} className='hidden md:block text-center w-full bg-green-900 text-lg mt-2 py-2 text-white rounded'>Wyczyść</button>
       </form>

@@ -36,10 +36,10 @@ export default function Home({featuredPost, recentPosts}) {
           <button>Turnieje</button>
         </div>
       </div> */}
-      <header className='container mx-auto px-2 py-4 md:mt-10 lg:px-32'>
+      <header className='max-w-screen-sm md:max-w-screen-md lg:max-w-screen-xl mx-auto px-2 py-4 md:mt-10 lg:px-32'>
         <Link href={`/post/${featuredPost.slug}`}>
-          <a className='block md:grid-cols-7 grid grid-rows-2 md:grid-rows-none gap-2 md:gap-16'>
-            <div className='relative rounded overflow-hidden grid place-content-center md:col-span-4 shadow-lg'>
+          <a className='block md:grid-cols-2 grid grid-rows-2 md:grid-rows-none gap-2 md:gap-8'>
+            <div className='relative rounded overflow-hidden grid place-content-center shadow-lg'>
               <Image
               src={featuredPost.image.url}
               layout='fill'
@@ -48,7 +48,7 @@ export default function Home({featuredPost, recentPosts}) {
               priority
               />
             </div>
-            <div className='md:py-4 text-center md:text-left md:col-span-3 md:py-0'>
+            <div className='md:py-4 text-center md:text-left md:py-0'>
               <FormattedDate date={featuredPost.createdAt}/>
               <h1 className='font-bold text-xl md:text-4xl md:mb-2 line-clamp-3 cursor-pointer'>{featuredPost.title}</h1>
               <p className='text-gray-600 text-normal md:text-lg line-clamp-4 cursor-pointer'>{featuredPost.excerpt}</p>

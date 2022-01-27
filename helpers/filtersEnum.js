@@ -1,20 +1,29 @@
 const filtersEnum = {
-  solo: 'Solo',
-  duo: 'Duo',
-  trio: 'Trio',
-  squad: 'Squad',
-  rematch: 'Rematch',
-  fortnite: 'Fortnite',
-  warlegend: 'Warlegend',
-  other: 'Inne',
-  qualifications: 'Kwalifikacje',
-  money: 'Pieniądze',
-  hype: 'Punkty Arena',
-  skin: 'Skin',
-  open: 'open',
-  contender: 'contender',
-  champion: 'champion',
-  pro: 'pro',
+  mode: {
+    solo: 'solo',
+    duo: 'duo',
+    trio: 'trio',
+    squad: 'squad'
+  },
+  rank: {
+    open: 'open',
+    contender: 'contender',
+    champion: 'champion',
+    pro: 'pro',
+  },
+  platform: {
+    fortnite: 'Fortnite',
+    rematch: 'Rematch',
+    warlegend: 'Warlegend',
+  },
+  rewardType: {
+    money: 'money',
+    skin: 'skin',
+    hype: 'hype',
+  },
+  other: {
+    qualifications: 'qualifications'
+  }
 }
 
 export default filtersEnum
