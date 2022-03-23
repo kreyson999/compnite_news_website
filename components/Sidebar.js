@@ -29,8 +29,8 @@ const Sidebar = ({category, postSlug}) => {
   return (
     <aside className='col-span-1 md:col-span-4'>
       {RecommendedFromCategory}
-      <AsideTwitchSection />
-      <AsideTournamentsSection/>
+      {/* <AsideTwitchSection /> */}
+      {/* <AsideTournamentsSection/> */}
       {/* <SectionTitle text={"Sprawdź gracza"} border />
       <div className='space-y-3'>
         <div className='grid grid-cols-4 gap-3'>
