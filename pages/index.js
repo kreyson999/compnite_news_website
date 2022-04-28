@@ -68,8 +68,8 @@ export default function Home({featuredPost, recentPosts}) {
               </div>
             </main>
             <Sidebar/>
-            <HomeCategory category={"Wygrane"}/>
-            <HomeCategory category={"Meta"}/>
+            {/* <HomeCategory category={"Wygrane"}/> */}
+            {/* <HomeCategory category={"Meta"}/> */}
             <HomeCategory category={"Turnieje"}/>
           </div>
         </div>

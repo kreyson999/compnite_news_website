@@ -54,8 +54,8 @@ export default function PostPage({post}) {
               <PostContent content={post.content}/>
             </main>
             <Sidebar category={post.category.name} postSlug={post.slug}/>
-            <HomeCategory category={"Wygrane"}/>
-            <HomeCategory category={"Meta"}/>
+            {/* <HomeCategory category={"Wygrane"}/> */}
+            {/* <HomeCategory category={"Meta"}/> */}
             <HomeCategory category={"Turnieje"}/>
           </div>
         </div>
